@@ -1,9 +1,7 @@
 #include <iostream>
 
-
-int main()
-{
-	//hy mofo
-	int a=2+2+3;
-	int b=1;
+int main() {
+    //kkkkkkkkkkkkkkk
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
 }
