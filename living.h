@@ -3,14 +3,18 @@
 using namespace std;
 
 class Living{
-private:
-    string name;
-    int healthpower;
 protected:
+    int armor;
+    int agility
+    double max_healthpower;
+    double current_hp;
+    string name;
     int level;
 public:
-    Living(string onoma,int lvl=1,int hp=500):name(onoma),level(lvl),healthpower(hp)
+    Living(string onoma,int lvl=1,double hp=500):name(onoma),level(lvl),max_healthpower(hp),current_hp(hp)
     {
+        armor=0;
+        agility=0;
         //the constructor of living beings
     }
 };
@@ -24,12 +28,17 @@ protected:
     int agility;
     int dexterity;
     int xp;
+    //Item Inventory
+    //Item Build
 public:
     Hero(string name):Living(name)
     {
         mana=100;
         money=100;
     }
+    virtual void level_up()=0;
+    void loose_money();
+    void regenerate_health();
 };
 
 class Warrior: public Hero{
@@ -41,6 +50,7 @@ public:
         dexterity=30;
         cout << "A new warrior named as " << name << " has been created\n";
     }
+    void level_up();
 };
 
 class Paladin : public Hero{
@@ -52,7 +62,7 @@ public:
         agility=30;
         cout << "A new paladin named as " << name << " has been created\n";
     }
-
+    void level_up();
 };
 
 
@@ -65,18 +75,17 @@ public:
         agility=100;
         cout << "A new sorcerer named as " << name << " has been created\n";
     }
+    void level_up();
 };
 
 
 class Monster : public Living{
 protected:
-    int armor;
     int attack_damage;
-    int agility;
 public:
     Monster(string name):Living(name)
     {
-
+        cout<< "A new dragon named as " << name << " has been awaken!";
     }
 };
 
