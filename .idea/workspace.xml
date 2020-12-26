@@ -29,9 +29,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6489bae-5d96-4d9a-9420-14cd0f2b0fd7" name="Default Changelist" comment="cmake lists commition">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e6489bae-5d96-4d9a-9420-14cd0f2b0fd7" name="Default Changelist" comment="living beings">
+      <change beforePath="$PROJECT_DIR$/living.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/living.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
       <workItem from="1608660414610" duration="1222000" />
       <workItem from="1608720335245" duration="612000" />
       <workItem from="1608999665356" duration="5000" />
-      <workItem from="1609008636569" duration="5297000" />
+      <workItem from="1609008636569" duration="6693000" />
     </task>
     <task id="LOCAL-00001" summary="pppppp">
       <created>1609009146347</created>
@@ -115,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609012556121</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="living beings">
+      <created>1609013976059</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1609013976059</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,33 +145,34 @@
     <MESSAGE value="new changes baby" />
     <MESSAGE value="cmake lists" />
     <MESSAGE value="cmake lists commition" />
-    <option name="LAST_COMMIT_MESSAGE" value="cmake lists commition" />
+    <MESSAGE value="living beings" />
+    <option name="LAST_COMMIT_MESSAGE" value="living beings" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1797" height="252" key="GridCell.Tab.0.bottom" timestamp="1608668981637">
+    <state width="1797" height="252" key="GridCell.Tab.0.bottom" timestamp="1609014052287">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
-    <state width="1797" height="252" key="GridCell.Tab.0.bottom/67.34.1853.1046@67.34.1853.1046" timestamp="1608668981637" />
-    <state width="1797" height="252" key="GridCell.Tab.0.center" timestamp="1608668981637">
+    <state width="1797" height="252" key="GridCell.Tab.0.bottom/67.34.1853.1046@67.34.1853.1046" timestamp="1609014052287" />
+    <state width="1797" height="252" key="GridCell.Tab.0.center" timestamp="1609014052287">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
-    <state width="1797" height="252" key="GridCell.Tab.0.center/67.34.1853.1046@67.34.1853.1046" timestamp="1608668981637" />
-    <state width="1797" height="252" key="GridCell.Tab.0.left" timestamp="1608668981636">
+    <state width="1797" height="252" key="GridCell.Tab.0.center/67.34.1853.1046@67.34.1853.1046" timestamp="1609014052287" />
+    <state width="1797" height="252" key="GridCell.Tab.0.left" timestamp="1609014052284">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
-    <state width="1797" height="252" key="GridCell.Tab.0.left/67.34.1853.1046@67.34.1853.1046" timestamp="1608668981636" />
-    <state width="1797" height="252" key="GridCell.Tab.0.right" timestamp="1608668981637">
+    <state width="1797" height="252" key="GridCell.Tab.0.left/67.34.1853.1046@67.34.1853.1046" timestamp="1609014052284" />
+    <state width="1797" height="252" key="GridCell.Tab.0.right" timestamp="1609014052287">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
-    <state width="1797" height="252" key="GridCell.Tab.0.right/67.34.1853.1046@67.34.1853.1046" timestamp="1608668981637" />
+    <state width="1797" height="252" key="GridCell.Tab.0.right/67.34.1853.1046@67.34.1853.1046" timestamp="1609014052287" />
     <state x="764" y="87" width="448" height="938" key="RollbackChangesDialog" timestamp="1609009305417">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
     <state x="764" y="87" width="448" height="938" key="RollbackChangesDialog/67.34.1853.1046@67.34.1853.1046" timestamp="1609009305417" />
-    <state x="488" y="224" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1609012565630">
+    <state x="488" y="224" width="1000" height="664" key="Vcs.Push.Dialog.v2" timestamp="1609013995595">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
-    <state x="488" y="224" width="1000" height="664" key="Vcs.Push.Dialog.v2/67.34.1853.1046@67.34.1853.1046" timestamp="1609012565630" />
+    <state x="488" y="224" width="1000" height="664" key="Vcs.Push.Dialog.v2/67.34.1853.1046@67.34.1853.1046" timestamp="1609013995595" />
     <state x="735" y="455" width="507" height="202" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609009250444">
       <screen x="67" y="34" width="1853" height="1046" />
     </state>
