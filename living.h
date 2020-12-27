@@ -5,7 +5,7 @@ using namespace std;
 class Living{
 protected:
     int armor;
-    int agility
+    int agility;
     double max_healthpower;
     double current_hp;
     string name;
