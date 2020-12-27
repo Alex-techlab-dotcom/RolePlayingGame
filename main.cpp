@@ -4,5 +4,6 @@
 int main() {
    Dragon* D1= new Dragon("Death");
 	//hi
+	std::cout<<"gerggwe";
 
 }
