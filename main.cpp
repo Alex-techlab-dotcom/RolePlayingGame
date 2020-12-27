@@ -1,9 +1,8 @@
 #include <iostream>
+#include "living.h"
 
 int main() {
-    //kkllllllllllllllll
-    //apapapapapaap
-    int a;
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+   Dragon* D1= new Dragon("Death");
+	//hi
+
 }
