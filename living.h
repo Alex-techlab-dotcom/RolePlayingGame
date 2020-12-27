@@ -24,7 +24,7 @@ private:
     int mana;
     int money;
 protected:
-    int strenght;
+    int strength;
     int agility;
     int dexterity;
     int xp;
@@ -37,7 +37,7 @@ public:
         money=100;
     }
     virtual void level_up()=0;
-    void loose_money();
+    void lose_money();
     void regenerate_health();
 };
 
@@ -45,7 +45,7 @@ class Warrior: public Hero{
 public:
     Warrior(string name):Hero(name)
     {
-        strenght=100;
+        strength=100;
         agility=80;
         dexterity=30;
         cout << "A new warrior named as " << name << " has been created\n";
@@ -57,7 +57,7 @@ class Paladin : public Hero{
 public:
     Paladin(string name):Hero(name)
     {
-        strenght=100;
+        strength=100;
         dexterity=100;
         agility=30;
         cout << "A new paladin named as " << name << " has been created\n";
@@ -70,7 +70,7 @@ class Sorcerer: public Hero{
 public:
     Sorcerer(string name):Hero(name)
     {
-        strenght=30;
+        strength=30;
         dexterity=100;
         agility=100;
         cout << "A new sorcerer named as " << name << " has been created\n";
