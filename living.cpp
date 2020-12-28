@@ -1,8 +1,6 @@
 #include "living.h"
 
 
-
-
 void Warrior::level_up()
 {
     level++;
