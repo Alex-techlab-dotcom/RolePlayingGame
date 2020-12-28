@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "items.h"
+#include "spells.h"
 using namespace std;
 
 class Living{
@@ -32,6 +33,7 @@ protected:
     int xp;
     vector<Item*> Inventory;
     vector<Item*> Build;
+    Spell* Abilities[5];
 
 public:
     Hero(string name):Living(name)
