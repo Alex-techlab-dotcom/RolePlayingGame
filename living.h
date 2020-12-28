@@ -1,17 +1,19 @@
 #include "string"
 #include <iostream>
+#include <vector>
+#include "items.h"
 using namespace std;
 
 class Living{
 protected:
-    int armor;
+    double armor;
     int agility;
     double max_healthpower;
     double current_hp;
     string name;
     int level;
 public:
-    Living(string onoma,int lvl=1,double hp=500):name(onoma),level(lvl),max_healthpower(hp),current_hp(hp)
+    Living(string lname,int lvl=1,double hp=500):name(lname),level(lvl),max_healthpower(hp),current_hp(hp)
     {
         armor=0;
         agility=0;
@@ -28,8 +30,9 @@ protected:
     int agility;
     int dexterity;
     int xp;
-    //Item Inventory
-    //Item Build
+    vector<Item> Inventory;
+    vector<Item> Build;
+
 public:
     Hero(string name):Living(name)
     {
@@ -93,7 +96,7 @@ class Dragon : public Monster{
 public:
     Dragon(string name):Monster(name)
     {
-        armor=100;
+        armor=0.3;
         attack_damage=300;
         agility=50;
     }
@@ -103,7 +106,7 @@ class Exoskeleton: public Monster{
 public:
     Exoskeleton(string name):Monster(name)
     {
-        armor=300;
+        armor=0.4;
         attack_damage=100;
         agility=50;
     }
@@ -113,7 +116,7 @@ class Spirit : public Monster{
 public:
     Spirit(string name):Monster(name)
     {
-        armor=50;
+        armor=0.1;
         agility=300;
         attack_damage=100;
     }
