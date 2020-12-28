@@ -30,8 +30,8 @@ protected:
     int agility;
     int dexterity;
     int xp;
-    vector<Item> Inventory;
-    vector<Item> Build;
+    vector<Item*> Inventory;
+    vector<Item*> Build;
 
 public:
     Hero(string name):Living(name)
