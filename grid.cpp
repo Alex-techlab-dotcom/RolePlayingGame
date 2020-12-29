@@ -108,6 +108,8 @@ void Grid::display_map() {
                     std::cout<<"\u2573\u2573";
                 else if(Map[i][j]->UserHeroes!=nullptr)
                     std::cout<<"\u25C0\u25B6";
+                else
+                    std::cout<<"  ";
                 std::cout<<"\u2502 ";
             }
         }
