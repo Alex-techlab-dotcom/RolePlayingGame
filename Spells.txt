@@ -1,0 +1,12 @@
+Flame Firespell 300 1 50 200 300 0.1 2
+Torch Firespell 700 2 60 350 500 0.25 3
+Eruption Firespell 1200 3 80 575 700 0.4 4
+Blaze Firespell 2000 5 100 850 1000 0.55 5
+Freeze Icespell 300 1 50 200 300 0.1 2
+Frostbite Icespell 700 2 60 350 500 0.25 3
+Snowball Icespell 1200 3 80 575 700 0.4 4
+Crystal-fist Icespell 2000 5 100 850 1000 0.55 5
+Bolt LightingSpell 300 1 50 200 300 0.1 2
+Flash LightingSpell 700 2 60 350 500 0.25 3
+Radiance LightingSpell 1200 3 80 575 700 0.4 4
+Judgment LightingSpell 2000 5 100 850 1000 0.55 5
