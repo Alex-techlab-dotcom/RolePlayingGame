@@ -96,13 +96,19 @@ void Grid::display_map() {
         for(int j=0; j<10; j++){
             if(Map[i][j]->TypeOfBlock=="Market"){
                 std::cout<<"\u2551";
-                if(Map[i][j]->TypeOfBlock=="Non_accessible")
-                    std::cout<<"\u2573\u2573";
-                else if(Map[i][j]->UserHeroes!=nullptr)
+                if(Map[i][j]->UserHeroes!=nullptr)
                     std::cout<<"\u25C0\u25B6";
                 else
                     std::cout<<"  ";
                 std::cout<<"\u2551 ";
+            }
+            else{
+                std::cout<<"\u2502";
+                if(Map[i][j]->TypeOfBlock=="Non_accessible")
+                    std::cout<<"\u2573\u2573";
+                else if(Map[i][j]->UserHeroes!=nullptr)
+                    std::cout<<"\u25C0\u25B6";
+                std::cout<<"\u2502 ";
             }
         }
         std::cout<<std::endl;
