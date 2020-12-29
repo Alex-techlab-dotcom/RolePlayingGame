@@ -1,3 +1,6 @@
+#ifndef OURGAME_LIVING_H
+#define OURGAME_LIVING_H
+
 #include "string"
 #include <iostream>
 #include <vector>
@@ -127,3 +130,5 @@ public:
         attack_damage=100;
     }
 };
+
+#endif

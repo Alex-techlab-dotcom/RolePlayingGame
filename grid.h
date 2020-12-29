@@ -1,3 +1,6 @@
+#ifndef OURGAME_GRID_H
+#define OURGAME_GRID_H
+
 #include "living.h"
 #include <string>
 
@@ -39,3 +42,5 @@ public:
 
     void display_map();
 };
+
+#endif
