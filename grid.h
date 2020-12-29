@@ -1,9 +1,6 @@
 #include "living.h"
 #include <string>
 
-
-
-
 class CompanyOfHeroes{
 private:
     Hero* MyHeroes[3];
@@ -22,7 +19,7 @@ private:
     std::string TypeOfBlock;
 
 public:
-    Block(std::string="Accessible");
+    Block(std::string="Common");
 
 };
 
@@ -37,4 +34,6 @@ public:
     void move_left(CompanyOfHeroes*);
     void move_right(CompanyOfHeroes*);
     Grid();
+
+    void display_map();
 };
