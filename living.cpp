@@ -1,5 +1,10 @@
 #include "living.h"
 
+//LIVING
+string Living::get_name(){
+    return name;
+}
+
 void Warrior::level_up()
 {
     level++;
@@ -40,4 +45,14 @@ void Hero::regenerate_health()
 
     //we dont want to regenerate more hp than the hero initially has!
     if (current_hp>max_healthpower)current_hp=max_healthpower;
+}
+
+int Hero::get_money()
+{
+    return money;
+}
+
+void Hero::reduce_money(int money_to_subtract)
+{
+    money-=money_to_subtract;
 }

@@ -36,4 +36,6 @@ public:
     void move_left(CompanyOfHeroes*);
     void move_right(CompanyOfHeroes*);
     Grid();
+
+    void display_map();
 };

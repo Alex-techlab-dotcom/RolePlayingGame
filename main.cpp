@@ -1,4 +1,3 @@
-#include <iostream>
 #include "shop.h"
 #include <vector>
 using namespace std;

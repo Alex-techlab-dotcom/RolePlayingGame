@@ -20,6 +20,8 @@ public:
         agility=0;
         //the constructor of living beings
     }
+
+    string get_name();
 };
 
 class Hero: public Living{
@@ -39,11 +41,13 @@ public:
     Hero(string name):Living(name)
     {
         mana=100;
-        money=100;
+        money=1200;
     }
     virtual void level_up()=0;
     void lose_money();
     void regenerate_health();
+    int get_money();
+    void reduce_money(int money_to_subtract);
 };
 
 class Warrior: public Hero{
