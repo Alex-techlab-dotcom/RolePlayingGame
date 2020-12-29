@@ -1,0 +1,8 @@
+Health Pot 80 1 60 0 0 0 0
+Mana Pot 90 1 0 60 0 0 0
+Shadow Gem 250 2 0 0 0.07 0 0
+Dark Matter 525 4 0 0 0.15 0 0
+Power Distiller 250 2 0 0 0 0.07 0
+Mega Phoenix 525 4 0 0 0 0.15 0
+Poison Fang 250 2 0 0 0 0 0.07
+Light Curtain 525 4 0 0 0 0 0.15

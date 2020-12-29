@@ -1,0 +1,18 @@
+Caladbolg 1000 5 500 OneHand
+Taming Sword 800 1 200 OneHand
+Crystal Sword 400 2 300 TwoHand
+Excalibur 2000 5 600 TwoHand
+Ragnarok 1150 3 440 OneHand
+Balmung  700 1 300 OneHand
+Save the Queen 500 2 300 OneHand
+Heartbreaker 1700 4 500 TwoHand
+Lionheart 500 2  300 OneHand
+Durandal 1890 4 600 TwoHand
+Ascalon 1400 2 500 OneHand
+Ambitious 1300 1 300 TwoHand
+Hrunting 1100 1 440 OneHand
+Astral Sword 1700 4 590 TwoHand
+Razzmatazz 1300 2 1000 TwoHands
+Deathbringer 2000 5 1000 TwoHands
+
+
