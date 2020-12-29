@@ -56,9 +56,8 @@ Grid::Grid(){
                 Map[i][j]=new Block("Non_accessible");
 
 
-
-            if( (i==0 and j==0) or (i==9 and j==9) or (i==6 and j==5))Map[i][j]=new Block("Market");
-
+            else if( (i==0 and j==0) or (i==9 and j==9) or (i==6 and j==5))Map[i][j]=new Block("Market");
+            else Map[i][j]=new Block("common");
         }
     }
 }
