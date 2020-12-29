@@ -11,6 +11,10 @@ private:
       int min_level;
 public:
     Item(std::string, int, int);
+    virtual void print_Item()=0;
+    void get( std::string& lname,int& lprice,  int& lmin_level);
+    int  get_price();
+    std::string get_name();
 };
 
 class Weapon : public Item{
@@ -19,6 +23,7 @@ private:
     bool two_hands_needed;
 public:
     Weapon(std::string, int, int, int, bool);
+    void print_Item();
 };
 
 class Armor : public Item{
@@ -26,6 +31,7 @@ private:
     double damage_reduction; //holds values from 0 - 1 percentage of the damage that is being absorbed
 public:
     Armor(std::string, int, int, double);
+    void print_Item();
 };
 
 //a potion can be used only once, after the first use needs to be destroyed
@@ -39,5 +45,6 @@ private:
     double dexterity_buff;
 public:
     Potion(std::string, int, int, int , int, double, double, double);
+    void print_Item();
 };
 #endif

@@ -2,6 +2,12 @@
 
 
 //COMPANY OF HEROES
+CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)
+{
+    MyHeroes[0]=h1;
+    MyHeroes[1]=h2;
+    MyHeroes[2]=h2;
+}
 
 int CompanyOfHeroes::get_x()
 {
@@ -18,6 +24,15 @@ void CompanyOfHeroes::change_pos(int x1,int y1)
 {
     x=x1;
     y=y1;
+}
+
+Hero* CompanyOfHeroes::get_Hero(int n)
+{
+    if(MyHeroes[n-1]!= nullptr)
+    {
+        return MyHeroes[n-1];
+    }else
+        return nullptr;
 }
 
 //BLOCK
