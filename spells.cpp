@@ -25,7 +25,7 @@ void Spell::get(int &m_level, int &mana_c, int &min_dmg, int &max_dmg)
     max_dmg=max_damage;
 }
 
-void Spell::print_basic()
+void Spell::print()
 {
     std::cout << "Name: " << name << "\n";
     std::cout << "Price: " << price<< "\n";
@@ -41,7 +41,7 @@ IceSpell::IceSpell(std::string is_name, int is_price, int is_min_level, int is_m
 }
 void IceSpell::print()
 {
-    print_basic();
+    Spell::print();
     std::cout<<"Dexterity Debuff: " << dexterity_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
 }
@@ -53,7 +53,7 @@ FireSpell::FireSpell(std::string fs_name, int fs_price, int fs_min_level, int fs
 }
 void FireSpell::print()
 {
-    print_basic();
+    Spell::print();
     std::cout<<"Armor Debuff: " << armor_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
 }
@@ -65,7 +65,7 @@ LightingSpell::LightingSpell(std::string ls_name, int ls_price, int ls_min_level
 }
 void LightingSpell::print()
 {
-    print_basic();
+    Spell::print();
     std::cout<<"Agility Debuff: " <<agility_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
 }

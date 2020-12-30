@@ -17,8 +17,7 @@ public:
     std::string get_name();
     int get_price();
     void get(int &m_level,int& mana_c,int& min_dmg,int& max_dmg);
-    virtual void print()=0;
-    void print_basic();
+    virtual void print();
 };
 
 //debuffs are given as positive real numbers from 0 to 1 that translate to percentages (ex armor_debuff=0.1 -10% effect)

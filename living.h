@@ -38,7 +38,7 @@ protected:
     int xp;
     vector<Item*> Inventory;
     vector<Item*> Build;
-    Spell* Abilities[5];
+    Spell* Abilities[4];
 
 public:
     Hero(string name):Living(name)

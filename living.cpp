@@ -63,7 +63,7 @@ void Hero::place_to_bag(Item* i)
 
 void Hero::learn_new_spell(Spell* s)
 {
-    for (int i = 0; i <5 ; ++i) {
+    for (int i = 0; i <4 ; ++i) {
         if (Abilities[i] == nullptr)
         {
             Abilities[i]=s;
