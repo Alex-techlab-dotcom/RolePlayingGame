@@ -3,10 +3,11 @@
 using namespace std;
 
 int main() {
-/*
+
         Grid peos;
         peos.display_map();
-*/
+
+
     Warrior* w1= new Warrior("Alex");
     Paladin* p1=new Paladin("tasos");
     CompanyOfHeroes* c= new CompanyOfHeroes(w1,p1);

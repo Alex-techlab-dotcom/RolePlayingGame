@@ -50,7 +50,9 @@ public:
     void lose_money();
     void regenerate_health();
     int get_money();
-    void reduce_money(int money_to_subtract);
+    void reduce_money(int );
+    void place_to_bag(Item*);
+    void learn_new_spell(Spell*);
 };
 
 class Warrior: public Hero{

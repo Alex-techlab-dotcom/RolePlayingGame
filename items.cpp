@@ -69,6 +69,16 @@ Potion::Potion(std::string p_name, int p_price, int p_min_level, int p_hp, int p
     dexterity_buff=p_dext;
 }
 
-void Potion::print_Item() {
-    int a;
+void Potion:: Potion::print_Item() {
+    std::string name;
+    int min_level,price;
+    this->get(name,price,min_level);
+    cout << "Potions's name :" << name << "\n";
+    cout << "Minimum level :" << min_level <<"\n";
+    cout << "Price :" << price << "gold coins \n";
+    if(hp_buff!=0)cout << "Health buff : " << hp_buff << " health points\n";
+    else if(mana_buff!=0) cout << "Mana buff : " << mana_buff << " mana points\n";
+    else if(agility_buff!=0) cout << "Agility buff : " << agility_buff*100 << "%\n";
+    else if(strength_buff!=0) cout << "Strength buff : " << strength_buff*100 << "%\n";
+    else cout << "Dexterity buff : " << dexterity_buff*100 << "%\n";
 }

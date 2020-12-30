@@ -56,3 +56,17 @@ void Hero::reduce_money(int money_to_subtract)
 {
     money-=money_to_subtract;
 }
+void Hero::place_to_bag(Item* i)
+{
+    Inventory.push_back(i);
+}
+
+void Hero::learn_new_spell(Spell* s)
+{
+    for (int i = 0; i <5 ; ++i) {
+        if (Abilities[i] == nullptr)
+        {
+            Abilities[i]=s;
+        }
+    }
+}

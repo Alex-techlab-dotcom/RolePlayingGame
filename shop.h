@@ -13,7 +13,7 @@ using namespace std;
 class Shop{
 private:
     vector <Weapon> Weapons;
-    vector <Spell>  Spells;
+    vector <Spell*>  Spells;
     vector <Armor> Armors;
     vector <Potion> Potions;
 

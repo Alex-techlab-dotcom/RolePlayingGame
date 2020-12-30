@@ -37,15 +37,36 @@ Shop::Shop(const string& W, const string& A,const string& P,const string& S){
     ifstream Potions_File("Potions.txt");
     int p_min_level, p_hp, p_mana;
     double p_agi,  p_str,  p_dext;
-    while (Potions_File >> name >> price >> p_min_level >> p_hp >> p_mana >> p_agi >> p_str >>p_dext)
+    while (Potions_File >> name >> name2 >> price >> p_min_level >> p_hp >> p_mana >> p_agi >> p_str >>p_dext)
     {
+        name+=name2;
         Potion p(name,price, p_min_level,  p_hp,  p_mana,  p_agi,  p_str,  p_dext);
         Potions.push_back(p);
     }
 
 
-   // ifstream  Spells_File(P);
-
+    ifstream  Spells_File("Spells.txt");
+    string type;
+    int mana_cost,min_dmg,max_dmg,duration;
+    double debuff;
+//ceSpell::IceSpell(std::string is_name, int is_price, int is_min_level, int is_mana_cost, int is_min, int is_max, double  is_dex, int is_rounds)
+    while (Spells_File >> name >> type >> price >> p_min_level >> mana_cost >>min_dmg >> max_dmg >> debuff >> duration)
+    {
+        if (type=="FireSpell")
+        {
+            FireSpell* f=new FireSpell(name,price,p_min_level,mana_cost,min_dmg,max_dmg,debuff,duration);
+            Spells.push_back(f);
+        }
+        else if(type== "IceSpell")
+        {
+            IceSpell* i=new IceSpell(name,price,p_min_level,mana_cost,min_dmg,max_dmg,debuff,duration);
+            Spells.push_back(i);
+        }
+        else{
+                LightingSpell* l=new LightingSpell(name,price,p_min_level,mana_cost,min_dmg,max_dmg,debuff,duration);
+                Spells.push_back(l);
+            }
+    }
 
 }
 
@@ -73,8 +94,10 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                 cout << i+1 << "." << buyers[i]->get_name() << endl;
 
             }
-
+            cout << "0.Exit\n";
             cin >> selected_hero;// we choose which hero is going to buy;
+
+            if (selected_hero==0)break;
 
             cout<<"Hey, " << buyers[selected_hero-1]->get_name() << " what are you looking for ?\n\n";
             string KeepBuying="yes";
@@ -85,8 +108,10 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                 cout << "2) Armor!\n";
                 cout << "3) Potions!\n";
                 cout << "4) Spells!\n";
-
+                cout << "5) Stop buying with this character!\n";
                 cin >> category;
+
+                if(category==5)break;
 
                 switch (category)
                 {
@@ -97,9 +122,10 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             Weapons[i].print_Item();
                             cout << "\n";
                         }
+                        cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
 
                         cout<< "Type the number of the item you want to buy\n";
-                        cout<< "To exit Weapon's item list,type 0\n";
+                        cout<< "To exit Weapon's item list,type 0\n\n";
                         cin >> Item_num;
                         while (Item_num)
                         {
@@ -107,14 +133,15 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             {
                                 buyers[selected_hero-1]->reduce_money(Weapons[Item_num-1].get_price());
                                 cout<<"Nice,you just bought " << Weapons[Item_num-1].get_name();
-                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n";
+                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                buyers[selected_hero-1]->place_to_bag(&Weapons[Item_num-1]);
                             }else
                             {
                                 cout << "I am sorry you do not have enough gold coins\n";
-                                cout << Weapons[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << "gold coins missing\n";
+                                cout << Weapons[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
                             }
                             cout<< "Type the number of the item you want to buy\n";
-                            cout<< "To exit Armor's item list,type 0\n";
+                            cout<< "To exit Weapon's item list,type 0\n\n";
                             cin >> Item_num;
                         }
                         break;
@@ -126,9 +153,10 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             Armors[i].print_Item();
                             cout << "\n";
                         }
+                        cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
 
                         cout<< "Type the number of the item you want to buy\n";
-                        cout<< "To exit Armor's item list,type 0\n";
+                        cout<< "To exit Armor's item list,type 0\n\n";
                         cin >> Item_num;
                         while (Item_num)
                         {
@@ -136,34 +164,93 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             {
                                 buyers[selected_hero-1]->reduce_money(Armors[Item_num-1].get_price());
                                 cout<<"Nice,you just bought " << Armors[Item_num-1].get_name();
-                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n";
+                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+                                buyers[selected_hero-1]->place_to_bag(&Armors[Item_num-1]);
                             }else
                             {
                                 cout << "I am sorry you do not have enough gold coins\n";
-                                cout << Armors[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << "gold coins missing\n";
+                                cout << Armors[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
                             }
 
                             cout<< "Type the number of the item you want to buy\n";
-                            cout<< "To exit Armor's item list,type 0\n";
+                            cout<< "To exit Armor's item list,type 0\n\n";
                             cin >> Item_num;
                         }
                         break;
+                    case 3:
+                        for (int i = 0; i < Potions.size(); ++i)
+                        {
+                            cout << i+1 <<")";
+                            Potions[i].print_Item();
+                            cout << "\n";
+                        }
+                        cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+
+                        cout<< "Type the number of the item you want to buy\n";
+                        cout<< "To exit Potions's item list,type 0\n\n";
+                        cin >> Item_num;
+                        while (Item_num)
+                        {
+                            if (buyers[selected_hero-1]->get_money()>=Potions[Item_num-1].get_price())//if u can afford the item
+                            {
+                                buyers[selected_hero-1]->reduce_money(Potions[Item_num-1].get_price());
+                                cout<<"Nice,you just bought " << Potions[Item_num-1].get_name();
+                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n";
+                                buyers[selected_hero-1]->place_to_bag(&Potions[Item_num-1]);
+                            }else
+                            {
+                                cout << "I am sorry you do not have enough gold coins\n";
+                                cout << Potions[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                            }
+
+                            cout<< "Type the number of the item you want to buy\n";
+                            cout<< "To exit Potion's item list,type 0\n\n";
+                            cin >> Item_num;
+                        }
+                        break;
+                    case 4:
+                            for (int i = 0; i < Spells.size(); ++i)
+                            {
+                                cout << i+1 <<")";
+                                Spells[i]->print();
+                                cout << "\n";
+                            }
+                            cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+
+                            cout<< "Type the number of the item you want to buy\n";
+                            cout<< "To exit Spell's item list,type 0\n\n";
+                            cin >> Item_num;
+                            while (Item_num)
+                            {
+                                if (buyers[selected_hero-1]->get_money()>=Spells[Item_num-1]->get_price())//if u can afford the item
+                                {
+                                    buyers[selected_hero-1]->reduce_money(Spells[Item_num-1]->get_price());
+                                    cout<<"Nice,you just bought " << Spells[Item_num-1]->get_name()<< "\n";
+                                    cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                    buyers[selected_hero-1]->learn_new_spell(Spells[Item_num-1]);
+                                }else
+                                {
+                                    cout << "I am sorry you do not have enough gold coins\n";
+                                    cout << Spells[Item_num-1]->get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                }
+                                cout<< "Type the number of the item you want to buy\n";
+                                cout<< "To exit Spell's item list,type 0\n\n";
+                                cin >> Item_num;
+                            }
+                            break;
                 }
                 cout << "Hey " <<buyers[selected_hero-1]->get_name() << " do you want to buy something more?\n";
                 cout << "Type 'yes' to continue...\n";
                 cout << "Type 'no' to stop...\n";
                 cin >>KeepBuying;
             }
-            cout << "\033[2J\033[1;1H";
+           // cout << "\033[2J\033[1;1H";
 
 
             cout << "If you want to choose an other hero to buy items ,pres yes...\n";
             cout << "To exit shop, press exit..\n";
             cin>> answer;
         }
-    cout << "\033[2J\033[1;1H";
 
-
-    //while()
-                //shop menu;
 }

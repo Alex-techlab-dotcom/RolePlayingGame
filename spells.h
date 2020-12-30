@@ -12,8 +12,13 @@ protected:
     int mana_cost;
     int min_damage;
     int max_damage;
-
+public:
     Spell(std::string, int, int, int, int, int);
+    std::string get_name();
+    int get_price();
+    void get(int &m_level,int& mana_c,int& min_dmg,int& max_dmg);
+    virtual void print()=0;
+    void print_basic();
 };
 
 //debuffs are given as positive real numbers from 0 to 1 that translate to percentages (ex armor_debuff=0.1 -10% effect)
@@ -24,6 +29,7 @@ private:
     int rounds;
 public:
     IceSpell(std::string, int, int, int, int, int, double, int);
+    void print();
 };
 
 class FireSpell : public Spell{
@@ -31,6 +37,7 @@ class FireSpell : public Spell{
     int rounds;
 public:
     FireSpell(std::string, int, int, int, int, int, double, int);
+    void print();
 };
 
 class LightingSpell : public Spell{
@@ -38,5 +45,6 @@ class LightingSpell : public Spell{
     int rounds;
 public:
     LightingSpell(std::string, int, int, int, int, int, double, int);
+    void print();
 };
 #endif
