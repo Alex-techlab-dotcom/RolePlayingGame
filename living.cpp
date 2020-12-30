@@ -56,6 +56,12 @@ void Hero::reduce_money(int money_to_subtract)
 {
     money-=money_to_subtract;
 }
+
+void Hero::increaze_money(int n)
+{
+    money+=n;
+}
+
 void Hero::place_to_bag(Item* i)
 {
     Inventory.push_back(i);
@@ -69,4 +75,31 @@ void Hero::learn_new_spell(Spell* s)
             Abilities[i]=s;
         }
     }
+}
+
+int Hero::Inventory_size()
+{
+    return Inventory.size();
+}
+
+vector<Item*> Hero::get_Inventory()
+{
+    return Inventory;
+}
+
+void Hero::display_inventory()
+{
+    for (int i = 0; i <Inventory_size() ; ++i) {
+        cout << i+1 << ")" << "\n";
+        Inventory[i]->print_Item();
+        cout << "\n\n";
+    }
+}
+
+Item* Hero::remove_from_Inv(int n)
+{
+    Item *ptr=Inventory[n-1];
+    Inventory.erase(Inventory.begin()+n-1);
+    cout << "size " << Inventory.size() << "\n";
+    return ptr;
 }

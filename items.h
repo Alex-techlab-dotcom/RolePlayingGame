@@ -8,11 +8,12 @@ class Item{ //MAKE IT ABSTRACT
 private:
       std::string name;
       int price;
+      int sell_price;
       int min_level;
 public:
     Item(std::string, int, int);
     virtual void print_Item()=0;
-    void get( std::string& lname,int& lprice,  int& lmin_level);
+    void get( std::string& lname,int& lprice,  int& lmin_level,int& sell_price2);
     int  get_price();
     std::string get_name();
 };
