@@ -9,11 +9,12 @@ private:
     Hero* MyHeroes[3];
     int x,y;
 public:
-    CompanyOfHeroes(Hero* h1= nullptr ,Hero* h2= nullptr, Hero* h3= nullptr );
+    CompanyOfHeroes(Hero* h1= nullptr ,Hero* h2= nullptr, Hero* h3= nullptr);
     int get_x();
     int get_y();
     void change_pos(int, int);
     Hero* get_Hero(int);
+    void DisplayStats();
 };
 
 class Block{
@@ -25,7 +26,7 @@ private:
 
 public:
     Block(std::string="Common");
-
+    //DisplayStats should be implemented here;
 };
 
 class Grid{

@@ -103,3 +103,14 @@ Item* Hero::remove_from_Inv(int n)
     cout << "size " << Inventory.size() << "\n";
     return ptr;
 }
+
+void Hero::display_stats(){
+    cout << name << endl;
+    cout << level << endl;
+    cout << "XP: " << xp << endl;
+    cout << "HP : " << current_hp << "/" << max_healthpower <<endl;
+    cout << "Mana: " << mana << endl;
+    cout << "Armor: " << armor << endl;
+    cout << "Agility: " << agility << endl;
+    cout << "Dexterity: " << dexterity << endl;
+}

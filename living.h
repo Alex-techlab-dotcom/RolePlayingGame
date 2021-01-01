@@ -33,7 +33,6 @@ private:
     int money;
 protected:
     int strength;
-    int agility;
     int dexterity;
     int xp;
     vector<Item*> Inventory;
@@ -51,8 +50,15 @@ public:
     void regenerate_health();
     int get_money();
     void reduce_money(int );
+    void increaze_money(int );
     void place_to_bag(Item*);
     void learn_new_spell(Spell*);
+    int Inventory_size();
+    vector<Item*> get_Inventory();
+    void display_inventory();
+    Item* remove_from_Inv(int n);
+    void display_stats();
+
 };
 
 class Warrior: public Hero{
@@ -100,6 +106,14 @@ public:
     Monster(string name):Living(name)
     {
         cout<< "A new dragon named as " << name << " has been awaken!";
+    }
+    void display_stats(){
+        cout << "Name: " << name << endl;
+        cout << "Level: " << level <<endl;
+        cout << "HP : " << current_hp << "/" << max_healthpower <<endl;
+        cout << "Armor: " << armor << endl;
+        cout << "Agility: " << agility << endl;
+        cout << "Attack: " << attack_damage << endl;
     }
 };
 

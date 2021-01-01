@@ -34,6 +34,26 @@ Hero* CompanyOfHeroes::get_Hero(int n)
     }else
         return nullptr;
 }
+void CompanyOfHeroes::DisplayStats()
+{
+    cout << "Choose one of your heroes\n";
+    int hero;
+    for (int i = 0; i <3 ; ++i) {
+        if (MyHeroes[i]!= nullptr)
+        {
+            cout << i+1 << ") " << MyHeroes[i]->get_name() << endl;
+        }
+    }cout << "4) Exit\n";
+
+    cin>>hero;
+
+    while (hero!=4)
+    {
+        MyHeroes[hero-1]->display_stats();
+        cin>> hero;
+    }
+    cout << "Exits...\n";
+}
 
 //BLOCK
 
