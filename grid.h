@@ -15,6 +15,8 @@ public:
     void change_pos(int, int);
     Hero* get_Hero(int);
     void DisplayStats();
+    bool alive();
+    void print();
 };
 
 class Block{
@@ -28,6 +30,8 @@ public:
     Block(std::string="Common");
     void add_monster(Monster *);
     void delete_monsters();
+    void check_for_battle();
+    void battle();
     //DisplayStats should be implemented here;
 };
 

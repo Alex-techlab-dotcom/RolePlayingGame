@@ -9,7 +9,18 @@ CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)
 {
     MyHeroes[0]=h1;
     MyHeroes[1]=h2;
-    MyHeroes[2]=h2;
+    MyHeroes[2]=h3;
+}
+
+bool CompanyOfHeroes::alive()
+{
+    for (int i = 0; i <3 ; ++i) {
+        if (MyHeroes[i]!= nullptr)
+        {
+            if(!MyHeroes[i]->IsAlive()) return false;
+        }
+    }
+    return true;
 }
 
 int CompanyOfHeroes::get_x()
@@ -57,7 +68,13 @@ void CompanyOfHeroes::DisplayStats()
     }
     cout << "Exits...\n";
 }
-
+void CompanyOfHeroes::print() {
+    for (int i = 0; i < 3; ++i) {
+        if (MyHeroes[i] != nullptr) {
+            cout << i + 1 << ") " << MyHeroes[i]->get_name() << endl;
+        }
+    }
+}
 //BLOCK
 
 Block::Block(std::string type){
@@ -71,6 +88,75 @@ void Block::delete_monsters() {
 
     monsters.clear();
 }
+/*void Block::check_for_battle()
+{
+    if (!monsters.empty())//call battle function();
+
+}*/
+
+void Block::battle()
+{
+    int turn=1,selected_monster;
+    while (!monsters.empty() and UserHeroes->alive() )
+    {
+        for (int i = 0; i <monsters.size() ; ++i) {
+           // monsters[i]->print 8a mou tin ftiajeis esy mpro
+        }
+        UserHeroes->print();
+
+        int choose_move;
+
+        if (turn%2==1) {
+            cout << "Heroe's turn...\n\n";
+            //choose
+            for (int i = 0; i < 3; ++i)
+            {
+                if (UserHeroes->get_Hero(i) != nullptr)
+                {
+                    cout<< "1) Attack!\n";
+                    cout<< "2) CastSpell!\n";
+                    cout<< "3) Use!\n";
+                    cin>>choose_move;
+
+                    switch (choose_move)
+                    {
+                        case 1:
+                            cout <<"Choose monster...\n\n";
+                            cin>> selected_monster;
+                            UserHeroes->get_Hero(i)->attack(monsters[selected_monster-1]);
+                            break;
+                        case 2:
+                            cout <<"Choose monster...\n\n";
+                            cin>> selected_monster;
+                            break;
+                        case 3:
+                            break;
+                    }
+                }
+
+                //siwtch
+                /*{
+                    case Hero->attack(Monster*)
+
+                    //monster->reducelife(attack-monster->getDef);
+
+
+                    case Her0->castspell(Monster*)
+                    case Hero->use_POTION()
+                } */
+            }
+        }
+        else {
+            //monsters turn
+            //functio for less hp for heroes is called after each monsters attack
+        }
+            turn++;
+    }
+
+        //reset stats();
+
+}
+
 
 void Block::add_monster(Monster * mptr) {
     monsters.push_back(mptr);
@@ -99,6 +185,7 @@ Grid::Grid(){
 void Grid::move_right(CompanyOfHeroes* c) {
     Map[c->get_x() + 1][c->get_y()]->UserHeroes = c;
     c->change_pos(c->get_x() - 1, c->get_y());
+    //check_for_battle()
 }
 
 void Grid::move_up(CompanyOfHeroes* c){
