@@ -18,9 +18,16 @@ protected:
 public:
     Living(string, int ,double, double);
     string get_name();
+    virtual void lose_life(int damage)=0;
+
 };
 
+class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
+
+
+
 class Hero: public Living{
+
 private:
     int magicPower;
     int money;
@@ -29,7 +36,7 @@ protected:
     double dexterity;
     int exp;
     vector<Item*> Inventory;
-    vector<Item*> Build;
+    Build B;
     Spell* Abilities[4];
 
 public:
@@ -47,8 +54,14 @@ public:
     void display_inventory();
     Item* remove_from_Inv(int n);
     void display_stats();
+    bool IsAlive();
+    void attack(Monster* m1);
+    void equip();
+    void wear(Item* ptr);
+    void lose_life(int damage);
 
 };
+
 
 class Warrior: public Hero{
 public:
@@ -78,6 +91,7 @@ protected:
 public:
     Monster(string, int, double, double, int, int, int);
     void display_stats();
+    void lose_life(int damage);
 };
 
 class Dragon : public Monster {

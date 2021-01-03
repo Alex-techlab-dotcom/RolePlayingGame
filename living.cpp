@@ -14,6 +14,7 @@ string Living::get_name(){
     return name;
 }
 
+
 //WARRIOR
 
 Warrior::Warrior(string w_name):Hero(w_name, 200, 0.25, 75, 0.05)
@@ -68,6 +69,13 @@ Hero::Hero(string h_name, double hp, double agil, int str, double dext):Living(n
     exp=0;
     magicPower=100;
     money=1200;
+}
+
+bool Hero::IsAlive()
+{
+    if (current_hp==0)return false;
+
+    return true;
 }
 
 void Hero::lose_money()
@@ -149,6 +157,112 @@ void Hero::display_stats(){
     cout << "Mana: " << magicPower << endl;
     cout << "Agility: " << agility << endl;
     cout << "Dexterity: " << dexterity << endl;
+}
+
+void Hero::wear(Item* ptr)
+{
+    if (dynamic_cast<Weapon*>(ptr)!= nullptr)//this means ptr is Weapon type pointer;
+    {
+
+            if (dynamic_cast<Weapon*>(ptr)->two_hands())
+            {
+                //two hands means both left and right hand pointers points to the same weapon
+                    if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr);
+                    else{
+                        place_to_bag(B.right_hand);
+                        B.right_hand=dynamic_cast<Weapon*>(ptr);
+                    }
+
+                    if (B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr);
+                    else{
+                        place_to_bag(B.left_hand);
+                        B.left_hand=dynamic_cast<Weapon*>(ptr);
+                    }
+            } else{
+                //One hand weapon
+                //first checks if the equiped weapon is two haned;
+                        if (B.left_hand->two_hands())
+                        {
+                            place_to_bag(B.left_hand);//put the old weapon to bug
+                            B.right_hand= nullptr;// the other hand is now free
+                            B.left_hand=(Weapon*)ptr;
+                                    //dynamic_cast<Weapon*>(ptr);
+                        }else{
+
+                                if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr);
+                                else if(B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr);
+                                else{
+                                    //Both hands already have weapons
+                                    cout <<"Choose which weapon you want to replace...\n\n";
+
+                                    cout<<"Left:\n";
+                                    B.left_hand->print_Item();
+
+                                    cout <<"Right: \n";
+                                    B.right_hand->print_Item();
+
+                                    string hand;
+                                    cin>>hand;
+
+                                        if (hand=="Left")
+                                        {
+                                            place_to_bag(B.left_hand);
+                                            B.left_hand=B.left_hand=dynamic_cast<Weapon*>(ptr);
+                                        }else{
+                                            place_to_bag(B.right_hand);
+                                            B.right_hand=dynamic_cast<Weapon*>(ptr);
+                                        }
+                                }
+
+                         }
+            }
+
+    }else {//it is armor type;
+        if (B.chest== nullptr)
+        {
+            B.chest=dynamic_cast<Armor*>(ptr);
+        }else{
+            place_to_bag(B.chest);//we put it to bag so we can wear the other item;
+            B.chest=dynamic_cast<Armor*>(ptr);
+        }
+    }
+}
+
+void Hero::equip()
+{
+    display_inventory();
+
+    int item_num;
+
+    cout << "Choose one item to equip...\n";
+    cout <<"Press 0 to exit\n";
+    cin>>item_num;
+        while (item_num)
+        {
+            wear(remove_from_Inv(item_num));
+            cin>>item_num;
+        }
+
+}
+
+void Monster::lose_life(int damage)
+{
+    double pain=damage-defence;
+    current_hp=current_hp-pain;
+}
+
+void Hero::attack(Monster *m1)
+{
+    int dmg;
+    if (B.left_hand==B.right_hand and B.left_hand!= nullptr)
+    {
+        //we have two hand weapon
+        m1->lose_life(B.left_hand->get_damage());
+    } else
+        {
+            if (B.left_hand!= nullptr)m1->lose_life(B.left_hand->get_damage());
+            if(B.right_hand!= nullptr)m1->lose_life(B.right_hand->get_damage());
+        }
 }
 
 //MONSTER
