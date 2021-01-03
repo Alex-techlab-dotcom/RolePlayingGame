@@ -25,6 +25,8 @@ private:
 public:
     Weapon(std::string, int, int, int, bool);
     void print_Item();
+    int get_damage();
+    bool two_hands();
 };
 
 class Armor : public Item{
@@ -33,6 +35,7 @@ private:
 public:
     Armor(std::string, int, int, double);
     void print_Item();
+    double get_damage_reduction();
 };
 
 //a potion can be used only once, after the first use needs to be destroyed
@@ -48,4 +51,17 @@ public:
     Potion(std::string, int, int, int , int, double, double, double);
     void print_Item();
 };
+
+
+class Build{
+    friend class Hero;
+private:
+    Weapon* left_hand;
+    Weapon* right_hand;
+    Armor* chest;
+public:
+    Build(Weapon* l= nullptr,Weapon* r= nullptr,Armor* a= nullptr);
+};
+
+
 #endif

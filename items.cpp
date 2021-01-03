@@ -46,6 +46,15 @@ void Weapon::print_Item()
     else cout <<"One Hand\n";
 }
 
+int Weapon::get_damage()
+{
+    return damage_per_attack;
+}
+bool Weapon::two_hands()
+{
+    return two_hands_needed;
+}
+
 //ARMOR
 Armor::Armor(std::string a_name, int a_price, int a_min_level, double a_dmg_red):Item(a_name, a_price, a_min_level) {
     damage_reduction=a_dmg_red;
@@ -60,6 +69,11 @@ void Armor::print_Item()
     cout << "Minimum level :" << min_level <<"\n";
     cout << "Price :" << price << "gold coins \n";
     cout << "Damage reduction :" << damage_reduction*10 <<"%";
+}
+
+double Armor::get_damage_reduction()
+{
+    return damage_reduction;
 }
 
 //POTION
@@ -85,4 +99,9 @@ void Potion:: Potion::print_Item() {
     else if(agility_buff!=0) cout << "Agility buff : " << agility_buff*100 << "%\n";
     else if(strength_buff!=0) cout << "Strength buff : " << strength_buff*100 << "%\n";
     else cout << "Dexterity buff : " << dexterity_buff*100 << "%\n";
+}
+
+ Build::Build(Weapon* l,Weapon* r,Armor* a):left_hand(l),right_hand(r),chest(a)
+{
+    //Build constructor
 }
