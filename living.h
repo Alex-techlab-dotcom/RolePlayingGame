@@ -10,47 +10,36 @@ using namespace std;
 
 class Living{
 protected:
-    double armor;
-    int agility;
-    double max_healthpower;
+    double max_healthPower;
     double current_hp;
     string name;
     int level;
+    double agility;
 public:
-    Living(string lname,int lvl=1,double hp=500):name(lname),level(lvl),max_healthpower(hp),current_hp(hp)
-    {
-        armor=0;
-        agility=0;
-        //the constructor of living beings
-    }
-
+    Living(string, int ,double, double);
     string get_name();
 };
 
 class Hero: public Living{
 private:
-    int mana;
+    int magicPower;
     int money;
 protected:
     int strength;
-    int dexterity;
-    int xp;
+    double dexterity;
+    int exp;
     vector<Item*> Inventory;
     vector<Item*> Build;
     Spell* Abilities[4];
 
 public:
-    Hero(string name):Living(name)
-    {
-        mana=100;
-        money=1200;
-    }
+    Hero(string, double, double,int, double);
     virtual void level_up()=0;
     void lose_money();
     void regenerate_health();
     int get_money();
     void reduce_money(int );
-    void increaze_money(int );
+    void increase_money(int );
     void place_to_bag(Item*);
     void learn_new_spell(Spell*);
     int Inventory_size();
@@ -63,88 +52,50 @@ public:
 
 class Warrior: public Hero{
 public:
-    Warrior(string name):Hero(name)
-    {
-        strength=100;
-        agility=80;
-        dexterity=30;
-        cout << "A new warrior named as " << name << " has been created\n";
-    }
+    Warrior(string name);
     void level_up();
 };
 
 class Paladin : public Hero{
 public:
-    Paladin(string name):Hero(name)
-    {
-        strength=100;
-        dexterity=100;
-        agility=30;
-        cout << "A new paladin named as " << name << " has been created\n";
-    }
+    Paladin(string name);
     void level_up();
 };
 
 
 class Sorcerer: public Hero{
 public:
-    Sorcerer(string name):Hero(name)
-    {
-        strength=30;
-        dexterity=100;
-        agility=100;
-        cout << "A new sorcerer named as " << name << " has been created\n";
-    }
+    Sorcerer(string);
     void level_up();
 };
 
 
 class Monster : public Living{
 protected:
-    int attack_damage;
+    int min_damage;
+    int max_damage;
+    int defence;
 public:
-    Monster(string name):Living(name)
-    {
-        cout<< "A new dragon named as " << name << " has been awaken!";
-    }
-    void display_stats(){
-        cout << "Name: " << name << endl;
-        cout << "Level: " << level <<endl;
-        cout << "HP : " << current_hp << "/" << max_healthpower <<endl;
-        cout << "Armor: " << armor << endl;
-        cout << "Agility: " << agility << endl;
-        cout << "Attack: " << attack_damage << endl;
-    }
+    Monster(string, int, double, double, int, int, int);
+    void display_stats();
 };
 
-class Dragon : public Monster{
+class Dragon : public Monster {
 public:
-    Dragon(string name):Monster(name)
-    {
-        armor=0.3;
-        attack_damage=300;
-        agility=50;
-    }
+    Dragon(string, int, double, double, int, int, int);
+    static Dragon *Construct_Dragon(string, int);
 };
 
 class Exoskeleton: public Monster{
 public:
-    Exoskeleton(string name):Monster(name)
-    {
-        armor=0.4;
-        attack_damage=100;
-        agility=50;
-    }
+    Exoskeleton(string, int, double, double, int, int, int);
+    static Exoskeleton *Construct_Exoskeleton(string, int);
 };
 
 class Spirit : public Monster{
 public:
-    Spirit(string name):Monster(name)
-    {
-        armor=0.1;
-        agility=300;
-        attack_damage=100;
-    }
+    Spirit(string, int, double, double, int, int, int);
+    static Spirit *Construct_Spirit(string, int);
 };
 
 #endif

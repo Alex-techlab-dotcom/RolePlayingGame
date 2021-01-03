@@ -1,4 +1,7 @@
 #include "grid.h"
+#include <ctime>
+#include <cstdlib>
+#include <fstream>
 
 
 //COMPANY OF HEROES
@@ -60,6 +63,17 @@ void CompanyOfHeroes::DisplayStats()
 Block::Block(std::string type){
     TypeOfBlock=type;
     UserHeroes=nullptr;
+}
+
+void Block::delete_monsters() {
+    for(auto p:monsters)
+        delete p;
+
+    monsters.clear();
+}
+
+void Block::add_monster(Monster * mptr) {
+    monsters.push_back(mptr);
 }
 
 //GRID FUNCTIONS
@@ -142,5 +156,50 @@ void Grid::display_map() {
                 std::cout<<"\u2514\u2500\u2500\u2518 ";
         }
         std::cout<<std::endl;
+    }
+}
+
+void Grid::delete_monsters() {
+    for(int i=0; i<10; i++) {
+        for (int j = 0; j < 10; j++)
+            Map[i][j]->delete_monsters();
+    }
+}
+
+void Grid::populate_grid(int level){
+
+    delete_monsters();
+
+    srand(time(nullptr));
+    ifstream Names_File("Names.txt");
+
+    for(int i=0; i<10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (Map[i][j]->TypeOfBlock != "Non_accessible") {
+                int monster_count = rand() % 4;
+                for (int k = monster_count; k > 0; k--) {
+                    int monster_type = rand() % 3;
+
+                    string name;
+                    int line, curr_line=0;
+                    line = rand() % 98 +1;
+                    while(getline(Names_File, name)){
+                        curr_line++;
+                        if(curr_line==line)
+                            break;
+                    }
+
+                    switch (monster_type) {
+                        case 0:
+                            Map[i][j]->add_monster(Dragon::Construct_Dragon(name, level));
+                        case 1:
+                            Map[i][j]->add_monster(Exoskeleton::Construct_Exoskeleton(name, level));
+                        case 2:
+                            Map[i][j]->add_monster(Spirit::Construct_Spirit(name, level));
+
+                    }
+                }
+            }
+        }
     }
 }

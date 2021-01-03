@@ -26,6 +26,8 @@ private:
 
 public:
     Block(std::string="Common");
+    void add_monster(Monster *);
+    void delete_monsters();
     //DisplayStats should be implemented here;
 };
 
@@ -42,6 +44,8 @@ public:
     Grid();
 
     void display_map();
+    void populate_grid(int);
+    void delete_monsters();
 };
 
 #endif
