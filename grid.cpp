@@ -68,6 +68,14 @@ void CompanyOfHeroes::DisplayStats()
     }
     cout << "Exits...\n";
 }
+int CompanyOfHeroes::number_of_heroes(){
+    int n=0;
+    for (int i = 0; i <3 ; ++i) {
+        if (MyHeroes[i]!= nullptr)n++;
+    }
+    return n;
+}
+
 void CompanyOfHeroes::print() {
     for (int i = 0; i < 3; ++i) {
         if (MyHeroes[i] != nullptr) {
@@ -113,27 +121,30 @@ void Block::battle()
             {
                 if (UserHeroes->get_Hero(i) != nullptr)
                 {
-                    cout<< "1) Attack!\n";
-                    cout<< "2) CastSpell!\n";
-                    cout<< "3) Use Potion!\n";
-                    cin>>choose_move;
-
-                    switch (choose_move)
+                    UserHeroes->get_Hero(i)->regenerate_health();
+                    if (UserHeroes->get_Hero(i)->IsAlive())
                     {
-                        case 1:
-                            cout <<"Choose monster...\n\n";
-                            cin>> selected_monster;
-                            UserHeroes->get_Hero(i)->attack(monsters[selected_monster-1]);
-                            break;
-                        case 2:
-                            cout <<"Choose monster...\n\n";
-                            cin>> selected_monster;
-                            break;
-                        case 3:
-                            cout << "Choose potion...\n\n";
-                            vector <Potion *>hero_pots=UserHeroes->get_Hero(i)->display_pots();
-                            int chosen_pot;
-                            cin>>chosen_pot;
+                        cout<< "1) Attack!\n";
+                        cout<< "2) CastSpell!\n";
+                        cout<< "3) Use Potion!\n";
+                        cin>>choose_move;
+
+                        switch (choose_move)
+                        {
+                            case 1:
+                                cout <<"Choose monster...\n\n";
+                                cin>> selected_monster;
+                                UserHeroes->get_Hero(i)->attack(monsters[selected_monster-1]);
+                                break;
+                            case 2:
+                                cout <<"Choose monster...\n\n";
+                                cin>> selected_monster;
+                                break;
+                            case 3:
+                                cout << "Choose potion...\n\n";
+                                vector <Potion *>hero_pots=UserHeroes->get_Hero(i)->display_pots();
+                                int chosen_pot;
+                                cin>>chosen_pot;
                                 while(chosen_pot<1 and chosen_pot>hero_pots.size()){
                                     cout << "Please, choose again more carefully...\n\n";
                                     cin>>chosen_pot;
@@ -141,26 +152,26 @@ void Block::battle()
 
                                 UserHeroes->get_Hero(i)->use_pot(hero_pots[chosen_pot-1]);
 
-                            break;
+                                break;
+                        }
+
+                        if (!monsters[selected_monster-1]->IsAlive())monsters.erase(monsters.begin()+selected_monster-1);
+
                     }
+
                 }
 
-                //siwtch
-                /*{
-                    case Hero->attack(Monster*)
-
-                    //monster->reducelife(attack-monster->getDef);
-
-
-                    case Her0->castspell(Monster*)
-                    case Hero->use_POTION()
-                } */
             }
         }
         else {
-            
-            //monsters turn
-            //function for less hp for heroes is called after each monsters attack
+            int target;
+            for (int i = 0; i <monsters.size() ; ++i) {
+                target=rand()%UserHeroes->number_of_heroes();
+                while (!UserHeroes->get_Hero(target)->IsAlive()){
+                    target=rand()%UserHeroes->number_of_heroes();
+                }
+                monsters[i]->attack(UserHeroes->get_Hero(target));
+            }
         }
             turn++;
     }
