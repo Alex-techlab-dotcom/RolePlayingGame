@@ -17,6 +17,8 @@ public:
     void DisplayStats();
     bool alive();
     void print();
+    int number_of_heroes();
+
 };
 
 class Block{

@@ -71,7 +71,7 @@ Hero::Hero(string h_name, double hp, double agil, int str, double dext):Living(n
     money=1200;
 }
 
-bool Hero::IsAlive()
+bool Living::IsAlive()
 {
     if (current_hp==0)return false;
 
@@ -244,6 +244,16 @@ void Hero::equip()
 
 }
 
+void Hero::lose_life(int damage)
+{
+    double defence=0;
+    if (B.chest!= nullptr){//we check if the hero is armed
+        defence=B.chest->get_damage_reduction();
+    }
+    damage=damage-damage*defence;
+    current_hp=current_hp-damage;
+}
+
 void Monster::lose_life(int damage)
 {
     double pain=damage-defence;
@@ -252,16 +262,21 @@ void Monster::lose_life(int damage)
 
 void Hero::attack(Monster *m1)
 {
-    int dmg;
-    if (B.left_hand==B.right_hand and B.left_hand!= nullptr)
-    {
-        //we have two hand weapon
-        m1->lose_life(B.left_hand->get_damage());
-    } else
+    int random_number=rand()%100+1;
+    double d=m1->get_agility()*100;
+    if ((double )random_number>d){
+        int dmg;
+        if (B.left_hand==B.right_hand and B.left_hand!= nullptr)
+        {
+            //we have two hand weapon
+            m1->lose_life(B.left_hand->get_damage());
+        } else
         {
             if (B.left_hand!= nullptr)m1->lose_life(B.left_hand->get_damage());
             if(B.right_hand!= nullptr)m1->lose_life(B.right_hand->get_damage());
         }
+    }
+
 }
 
 void Hero::use_pot(Potion* potion)
@@ -301,6 +316,15 @@ void Monster::display_stats(){
     cout << "HP : " << current_hp << "/" << max_healthPower <<endl;
     cout << "Attack: " << min_damage<< " - "<<max_damage<< endl;
     cout << "Defence: " << defence << endl;
+}
+
+void Monster::attack(Hero *hero)
+{
+    int hit=rand()%(max_damage -min_damage+1) + min_damage;
+    // we generate a number between max_damage and min_damage;
+    double dodge=hero->get_agility()*100;
+    int random_num=rand()%100+1;
+    if ((double )random_num>dodge)hero->lose_life(hit);
 }
 
 //DRAGON

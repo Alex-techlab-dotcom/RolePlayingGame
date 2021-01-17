@@ -19,7 +19,10 @@ public:
     Living(string, int ,double, double);
     string get_name();
     virtual void lose_life(int damage)=0;
-
+    double get_agility(){
+        return agility;
+    }
+    bool IsAlive();
 };
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
@@ -53,7 +56,7 @@ public:
     void display_inventory();
     Item* remove_from_Inv(int n);
     void display_stats();
-    bool IsAlive();
+    //bool IsAlive();
     void attack(Monster* m1);
     void equip();
     void wear(Item* ptr);
@@ -62,7 +65,7 @@ public:
     vector <Potion *>display_pots();
 
 
-    };
+};
 
 
 class Warrior: public Hero{
@@ -94,6 +97,7 @@ public:
     Monster(string, int, double, double, int, int, int);
     void display_stats();
     void lose_life(int damage);
+    void attack(Hero*);
 };
 
 class Dragon : public Monster {
