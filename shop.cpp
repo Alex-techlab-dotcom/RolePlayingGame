@@ -249,7 +249,7 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             {
                                 cout << "Your inventory is: \n";
                                 buyers[selected_hero-1]->display_inventory();
-                               Item_num=1;
+                                Item_num=1;
                                 while(Item_num and buyers[selected_hero-1]->Inventory_size()!=0)
                                 {
                                     cout<< "Type the number of the item you want to sell\n";
@@ -262,7 +262,7 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                                     }else
                                     {
                                         Item* i=buyers[selected_hero-1]->remove_from_Inv(Item_num);
-                                        buyers[selected_hero-1]->increaze_money(i->get_price()/2);
+                                        buyers[selected_hero-1]->increase_money(i->get_price()/2);
                                         if(buyers[selected_hero-1]->Inventory_size()!=0)
                                         {
                                             cout << "Your inventory is: \n";

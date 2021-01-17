@@ -115,7 +115,7 @@ void Block::battle()
                 {
                     cout<< "1) Attack!\n";
                     cout<< "2) CastSpell!\n";
-                    cout<< "3) Use!\n";
+                    cout<< "3) Use Potion!\n";
                     cin>>choose_move;
 
                     switch (choose_move)
@@ -130,6 +130,17 @@ void Block::battle()
                             cin>> selected_monster;
                             break;
                         case 3:
+                            cout << "Choose potion...\n\n";
+                            vector <Potion *>hero_pots=UserHeroes->get_Hero(i)->display_pots();
+                            int chosen_pot;
+                            cin>>chosen_pot;
+                                while(chosen_pot<1 and chosen_pot>hero_pots.size()){
+                                    cout << "Please, choose again more carefully...\n\n";
+                                    cin>>chosen_pot;
+                                }
+
+                                UserHeroes->get_Hero(i)->use_pot(hero_pots[chosen_pot-1]);
+
                             break;
                     }
                 }
@@ -147,8 +158,9 @@ void Block::battle()
             }
         }
         else {
+            
             //monsters turn
-            //functio for less hp for heroes is called after each monsters attack
+            //function for less hp for heroes is called after each monsters attack
         }
             turn++;
     }

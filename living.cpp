@@ -145,7 +145,6 @@ Item* Hero::remove_from_Inv(int n)
 {
     Item *ptr=Inventory[n-1];
     Inventory.erase(Inventory.begin()+n-1);
-    cout << "size " << Inventory.size() << "\n";
     return ptr;
 }
 
@@ -265,6 +264,29 @@ void Hero::attack(Monster *m1)
         }
 }
 
+void Hero::use_pot(Potion* potion)
+{
+    potion->buff_stats(current_hp,current_magic_power,agility,strength,dexterity);
+    for (int i = 0; i <Inventory_size() ; ++i) {
+        if (potion==Inventory[i])Inventory.erase(Inventory.begin()+i);
+    }
+}
+
+vector <Potion *> Hero::display_pots(){
+    vector <Potion *> pots;
+    for(auto& i : Inventory){
+        if(dynamic_cast<Potion *>(i)!=nullptr)
+            pots.push_back((Potion *) i);
+    }
+
+    for(int i=0; i<pots.size(); i++){
+        cout<<"## "<<i+1<<" ##"<<endl;
+        pots[i]->print_use();
+        cout<<endl;
+    }
+
+    return pots;
+}
 //MONSTER
 Monster::Monster(string m_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Living(m_name, lvl, hp, agil)
 {

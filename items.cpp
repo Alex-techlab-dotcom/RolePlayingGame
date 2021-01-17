@@ -86,7 +86,7 @@ Potion::Potion(std::string p_name, int p_price, int p_min_level, int p_hp, int p
     dexterity_buff=p_dext;
 }
 
-void Potion:: Potion::print_Item() {
+void Potion::print_Item() {
     std::string name;
     int min_level,price,sell_price;
     this->get(name,price,min_level,sell_price);
@@ -99,6 +99,24 @@ void Potion:: Potion::print_Item() {
     else if(agility_buff!=0) cout << "Agility buff : " << agility_buff*100 << "%\n";
     else if(strength_buff!=0) cout << "Strength buff : " << strength_buff*100 << "%\n";
     else cout << "Dexterity buff : " << dexterity_buff*100 << "%\n";
+}
+
+void Potion::print_use(){
+
+    cout << "Potions's name :" << get_name() << "\n";
+    if(hp_buff!=0)cout << "Health buff : " << hp_buff << " health points\n";
+    else if(mana_buff!=0) cout << "Mana buff : " << mana_buff << " mana points\n";
+    else if(agility_buff!=0) cout << "Agility buff : " << agility_buff*100 << "%\n";
+    else if(strength_buff!=0) cout << "Strength buff : " << strength_buff*100 << "%\n";
+    else cout << "Dexterity buff : " << dexterity_buff*100 << "%\n";
+}
+
+void Potion::buff_stats(double & hp, int & mana, double & agility, int & strength, double & dexterity){
+    hp+=hp_buff;
+    mana+=mana_buff;
+    agility+=agility_buff;
+    strength+=strength_buff*strength;
+    dexterity+=dexterity_buff;
 }
 
  Build::Build(Weapon* l,Weapon* r,Armor* a):left_hand(l),right_hand(r),chest(a)

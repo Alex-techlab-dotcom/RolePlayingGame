@@ -24,12 +24,11 @@ public:
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
 
-
-
 class Hero: public Living{
 
 private:
     int magicPower;
+    int current_magic_power;
     int money;
 protected:
     int strength;
@@ -59,8 +58,11 @@ public:
     void equip();
     void wear(Item* ptr);
     void lose_life(int damage);
+    void use_pot(Potion *);
+    vector <Potion *>display_pots();
 
-};
+
+    };
 
 
 class Warrior: public Hero{

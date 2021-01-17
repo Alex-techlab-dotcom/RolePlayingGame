@@ -50,6 +50,9 @@ private:
 public:
     Potion(std::string, int, int, int , int, double, double, double);
     void print_Item();
+    void print_use();
+    void buff_stats(double &, int &, double &, int &, double &);
+
 };
 
 
