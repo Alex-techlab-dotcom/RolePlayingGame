@@ -176,7 +176,8 @@ void Block::battle()
                                         cin>>selected_spell;
                                     }
                                     spell_db=UserHeroes->get_Hero(i)->use_spell(selected_spell-1,monsters[selected_monster-1], turn);
-                                    debuffs.push_back(spell_db);
+                                    if(spell_db!=nullptr)
+                                        debuffs.push_back(spell_db);
                                 }
                                 break;
                             }
