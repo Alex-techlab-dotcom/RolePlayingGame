@@ -1,4 +1,5 @@
 #include "spells.h"
+#include <cmath>
 
 //SPELL
 Spell::Spell(std::string s_name, int s_price, int s_min_level, int s_mana_cost, int s_min, int s_max) {
@@ -29,34 +30,73 @@ void Spell::print()
 {
     std::cout << "Name: " << name << "\n";
     std::cout << "Price: " << price<< "\n";
-    std::cout << "Minimun level: " << min_level<< "\n";
+    std::cout << "Minimum level: " << min_level<< "\n";
     std::cout << "Min damage: " << min_damage<< "\n";
     std::cout << "Max damage: " << max_damage<< "\n";
     std::cout <<  "Mana cost: " << mana_cost<< "\n";
 }
+
+int Spell::getMinDamage() const {
+    return min_damage;
+}
+
+int Spell::getMaxDamage() const {
+    return max_damage;
+}
+
 //ICE SPELL
 IceSpell::IceSpell(std::string is_name, int is_price, int is_min_level, int is_mana_cost, int is_min, int is_max, double  is_dex, int is_rounds):Spell(is_name, is_price, is_min_level, is_mana_cost, is_min, is_max) {
-    dexterity_debuff=is_dex;
+    damage_debuff=is_dex;
     rounds=is_rounds;
 }
 void IceSpell::print()
 {
     Spell::print();
-    std::cout<<"Dexterity Debuff: " << dexterity_debuff;
+    std::cout<<"Damage Debuff: " << damage_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
+}
+void IceSpell::battle_display() {
+    std::cout<<"Name: "<<name;
+    std::cout<<" ## Mana Cost: "<<mana_cost;
+    std::cout<<" ## Damage: "<<min_damage<<" - "<<max_damage;
+    std::cout<<" ## Effect: "<< 100*damage_debuff<<" damage de-buff for "<<rounds<<" rounds"<<std::endl;
+}
+
+int IceSpell::getRounds() const {
+    return rounds;
+}
+
+double IceSpell::getDebuff() const {
+    return damage_debuff;
 }
 
 //FIRE SPELL
 FireSpell::FireSpell(std::string fs_name, int fs_price, int fs_min_level, int fs_mana_cost, int fs_min, int fs_max, double  fs_arm, int fs_rounds):Spell(fs_name, fs_price, fs_min_level, fs_mana_cost, fs_min, fs_max) {
-    armor_debuff=fs_arm;
+    defence_debuff=fs_arm;
     rounds=fs_rounds;
 }
 void FireSpell::print()
 {
     Spell::print();
-    std::cout<<"Armor Debuff: " << armor_debuff;
+    std::cout<<"Defence Debuff: " << defence_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
 }
+
+void FireSpell::battle_display() {
+    std::cout<<"Name: "<<name;
+    std::cout<<" ## Mana Cost: "<<mana_cost;
+    std::cout<<" ## Damage: "<<min_damage<<" - "<<max_damage;
+    std::cout<<" ## Effect: "<< 100*defence_debuff<<" defence de-buff for "<<rounds<<" rounds"<<std::endl;
+}
+
+int FireSpell::getRounds() const {
+    return rounds;
+}
+
+double FireSpell::getDebuff() const{
+    return defence_debuff;
+}
+
 
 //LIGHTING SPELL
 LightingSpell::LightingSpell(std::string ls_name, int ls_price, int ls_min_level, int ls_mana_cost, int ls_min, int ls_max, double  ls_ag, int ls_rounds):Spell(ls_name, ls_price, ls_min_level, ls_mana_cost, ls_min, ls_max) {
@@ -68,4 +108,66 @@ void LightingSpell::print()
     Spell::print();
     std::cout<<"Agility Debuff: " <<agility_debuff;
     std::cout <<"Duration: " << rounds << " rounds\n";
+}
+
+void LightingSpell::battle_display() {
+    std::cout<<"Name: "<<name;
+    std::cout<<" ## Mana Cost: "<<mana_cost;
+    std::cout<<" ## Damage: "<<min_damage<<" - "<<max_damage;
+    std::cout<<" ## Effect: "<< 100*agility_debuff<<" agility de-buff for "<<rounds<<" rounds"<<std::endl;
+}
+
+int LightingSpell::getRounds() const {
+    return rounds;
+}
+
+double LightingSpell::getDebuff() const {
+    return agility_debuff;
+}
+
+//DEBUFF
+
+Debuff::Debuff(Monster * m, int r) {
+    target = m;
+    expiration_round=r;
+}
+
+Monster *Debuff::getTarget() const {
+    return target;
+}
+
+int Debuff::getExpirationRound() const {
+    return expiration_round;
+}
+
+//DAMAGE DEBUFF
+
+Damage_Debuff::Damage_Debuff(Monster *m, int r, double spell_percentage) : Debuff(m,r) {
+    min_damage_debuff_amount= floor(target->getMinDamage() * spell_percentage);
+    max_damage_debuff_amount= floor(target->getMaxDamage() *spell_percentage);
+}
+
+Damage_Debuff::~Damage_Debuff(){
+    target->setMinDamage(target->getMinDamage()+min_damage_debuff_amount);
+    target->setMaxDamage(target->getMaxDamage()+max_damage_debuff_amount);
+}
+
+//DEFENCE DEBUFF
+
+Defence_Debuff::Defence_Debuff(Monster *m, int r, double spell_percentage):Debuff(m,r) {
+    defence_debuff_amount= floor(target->getDefence()*spell_percentage);
+}
+
+Defence_Debuff::~Defence_Debuff(){
+    target->setDefence(target->getDefence()+defence_debuff_amount);
+}
+
+//AGILITY DEBUFF
+
+Agility_Debuff::Agility_Debuff(Monster *m, int r, double spell_percentage): Debuff(m,r){
+    agility_debuff_amount=target->get_agility()*spell_percentage;
+}
+
+Agility_Debuff::~Agility_Debuff(){
+    target->setAgility(target->get_agility()+agility_debuff_amount);
 }

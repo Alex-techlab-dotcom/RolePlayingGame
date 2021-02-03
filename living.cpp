@@ -1,4 +1,5 @@
 #include "living.h"
+#include <cmath>
 
 //LIVING
 Living::Living(string lname,int lvl, double hp, double agil)
@@ -69,6 +70,8 @@ Hero::Hero(string h_name, double hp, double agil, int str, double dext):Living(n
     exp=0;
     magicPower=100;
     money=1200;
+    for(int i=0; i<4; i++)
+        Abilities[i]=nullptr;
 }
 
 bool Living::IsAlive()
@@ -76,6 +79,10 @@ bool Living::IsAlive()
     if (current_hp==0)return false;
 
     return true;
+}
+
+void Living::setAgility(double a) {
+    Living::agility = a;
 }
 
 void Hero::lose_money()
@@ -252,12 +259,14 @@ void Hero::lose_life(int damage)
     }
     damage=damage-damage*defence;
     current_hp=current_hp-damage;
+    if(current_hp<0)current_hp=0;
 }
 
 void Monster::lose_life(int damage)
 {
     double pain=damage-defence;
     current_hp=current_hp-pain;
+    if(current_hp<0)current_hp=0;
 }
 
 void Hero::attack(Monster *m1)
@@ -302,6 +311,54 @@ vector <Potion *> Hero::display_pots(){
 
     return pots;
 }
+
+int Hero::display_spells() {
+    int k=0;
+    for(int i=0; i<4; i++){
+        if(Abilities[i]!=nullptr){
+            k++;
+            cout<<k<<") ";
+            Abilities[i]->battle_display();
+            cout<<endl;
+        }
+    }
+    return k;
+}
+
+Debuff* Hero::use_spell(int spell, Monster* target, int turn){
+    int random=rand()%100+1;
+    double d=target->get_agility()*100;
+    if((double)random>d){
+        int hit=rand()%(Abilities[spell]->getMaxDamage() -Abilities[spell]->getMinDamage()+1) + Abilities[spell]->getMinDamage();
+        target->lose_life(hit);
+        if(target->IsAlive()){
+            if(dynamic_cast<IceSpell *> (Abilities[spell])!=nullptr){
+                Debuff * db;
+                db = new Damage_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
+                target->setMinDamage(floor(target->getMinDamage()-target->getMinDamage()*Abilities[spell]->getDebuff()));
+                target->setMaxDamage(floor(target->getMaxDamage()-target->getMaxDamage()*Abilities[spell]->getDebuff()));
+                return db;
+            }
+            else if(dynamic_cast<FireSpell *> (Abilities[spell])!=nullptr){
+                Debuff * db;
+                db = new Defence_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
+                target->setDefence(floor(target->getDefence()-target->getDefence()*Abilities[spell]->getDebuff()));
+                return db;
+            }
+            else{
+                Debuff *db;
+                db = new Agility_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
+                target->setAgility(target->get_agility()-target->get_agility()*Abilities[spell]->getDebuff());
+                return db;
+
+            }
+        }
+        else return nullptr;
+    }
+    else
+        return nullptr;
+}
+
 //MONSTER
 Monster::Monster(string m_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Living(m_name, lvl, hp, agil)
 {
@@ -311,11 +368,11 @@ Monster::Monster(string m_name, int lvl, double hp, double agil, int min_dmg, in
 }
 
 void Monster::display_stats(){
-    cout << "Name: " << name << endl;
-    cout << "Level: " << level <<endl;
-    cout << "HP : " << current_hp << "/" << max_healthPower <<endl;
-    cout << "Attack: " << min_damage<< " - "<<max_damage<< endl;
-    cout << "Defence: " << defence << endl;
+    cout << "Name: " << name;
+    cout << " ## Level: " << level;
+    cout << " ## HP : " << current_hp << "/" << max_healthPower;
+    cout << " ## Attack: " << min_damage<< " - "<<max_damage;
+    cout << " ## Defence: " << defence;
 }
 
 void Monster::attack(Hero *hero)
@@ -325,6 +382,30 @@ void Monster::attack(Hero *hero)
     double dodge=hero->get_agility()*100;
     int random_num=rand()%100+1;
     if ((double )random_num>dodge)hero->lose_life(hit);
+}
+
+int Monster::getMinDamage() const {
+    return min_damage;
+}
+
+int Monster::getMaxDamage() const {
+    return max_damage;
+}
+
+int Monster::getDefence() const {
+    return defence;
+}
+
+void Monster::setMinDamage(int minDamage) {
+    min_damage = minDamage;
+}
+
+void Monster::setMaxDamage(int maxDamage) {
+    max_damage = maxDamage;
+}
+
+void Monster::setDefence(int defence) {
+    Monster::defence = defence;
 }
 
 //DRAGON

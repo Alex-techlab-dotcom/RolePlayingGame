@@ -102,13 +102,26 @@ void Block::delete_monsters() {
 
 }*/
 
+void Block::display_monsters(){
+    int i=1;
+    cout<<endl;
+    for(auto p:monsters){
+        cout<<i<<") ";
+        p->display_stats();
+        i++;
+    }
+}
+
 void Block::battle()
 {
     int turn=1,selected_monster;
     while (!monsters.empty() and UserHeroes->alive() )
     {
+        vector<Debuff*> debuffs;
+        Debuff * spell_db;
         for (int i = 0; i <monsters.size() ; ++i) {
-           // monsters[i]->print 8a mou tin ftiajeis esy mpro
+            cout<<i+1<<") ";
+           monsters[i]->display_stats();
         }
         UserHeroes->print();
 
@@ -125,37 +138,74 @@ void Block::battle()
                     if (UserHeroes->get_Hero(i)->IsAlive())
                     {
                         cout<< "1) Attack!\n";
-                        cout<< "2) CastSpell!\n";
+                        cout<< "2) Cast Spell!\n";
                         cout<< "3) Use Potion!\n";
                         cin>>choose_move;
 
                         switch (choose_move)
                         {
-                            case 1:
-                                cout <<"Choose monster...\n\n";
-                                cin>> selected_monster;
-                                UserHeroes->get_Hero(i)->attack(monsters[selected_monster-1]);
-                                break;
-                            case 2:
-                                cout <<"Choose monster...\n\n";
-                                cin>> selected_monster;
-                                break;
-                            case 3:
-                                cout << "Choose potion...\n\n";
-                                vector <Potion *>hero_pots=UserHeroes->get_Hero(i)->display_pots();
-                                int chosen_pot;
-                                cin>>chosen_pot;
-                                while(chosen_pot<1 and chosen_pot>hero_pots.size()){
+                            case 1: {
+                                cout << "Choose monster to attack...\n\n";
+                                display_monsters();
+                                cin >> selected_monster;
+                                while (selected_monster < 1 or selected_monster > monsters.size()) {
                                     cout << "Please, choose again more carefully...\n\n";
-                                    cin>>chosen_pot;
+                                    cin >> selected_monster;
+                                }
+                                UserHeroes->get_Hero(i)->attack(monsters[selected_monster - 1]);
+                                break;
+                            }
+                            case 2:{
+                                cout <<"Choose monster to cast spell...\n\n";
+                                display_monsters();
+                                cin>> selected_monster;
+                                while(selected_monster<1 or selected_monster>monsters.size()){
+                                    cout << "Please, choose again more carefully...\n\n";
+                                    cin>>selected_monster;
+                                }
+                                cout<<"Choose Spell...\n\n";
+                                int spell_count=UserHeroes->get_Hero(i)->display_spells();
+                                if(spell_count==0){
+                                    cout<<"Sorry this hero has no spells."<<endl;
+                                }
+                                else{
+                                    int selected_spell;
+                                    cin>>selected_spell;
+                                    while(selected_spell<1 or selected_spell>spell_count+1){
+                                        cout<<"Please choose again more carefully...\n\n";
+                                        cin>>selected_spell;
+                                    }
+                                    spell_db=UserHeroes->get_Hero(i)->use_spell(selected_spell-1,monsters[selected_monster-1], turn);
+                                    debuffs.push_back(spell_db);
+                                }
+                                break;
+                            }
+                            case 3: {
+                                cout << "Choose potion...\n\n";
+                                vector<Potion *> hero_pots = UserHeroes->get_Hero(i)->display_pots();
+                                int chosen_pot;
+                                cin >> chosen_pot;
+                                while (chosen_pot < 1 or chosen_pot > hero_pots.size()) {
+                                    cout << "Please, choose again more carefully...\n\n";
+                                    cin >> chosen_pot;
                                 }
 
-                                UserHeroes->get_Hero(i)->use_pot(hero_pots[chosen_pot-1]);
+                                UserHeroes->get_Hero(i)->use_pot(hero_pots[chosen_pot - 1]);
 
                                 break;
+                            }
                         }
 
-                        if (!monsters[selected_monster-1]->IsAlive())monsters.erase(monsters.begin()+selected_monster-1);
+                        if (!monsters[selected_monster-1]->IsAlive()){
+                            for(int k=0; k<debuffs.size(); k++){
+                                if(debuffs[k]->getTarget()==monsters[selected_monster-1]){
+                                    delete debuffs[k];
+                                    debuffs.erase(debuffs.begin()+k);
+                                }
+                            }
+                            delete monsters[selected_monster-1];
+                            monsters.erase(monsters.begin()+selected_monster-1);
+                        }
 
                     }
 
@@ -165,7 +215,7 @@ void Block::battle()
         }
         else {
             int target;
-            for (int i = 0; i <monsters.size() ; ++i) {
+            for(int i = 0; i <monsters.size() ; ++i) {
                 target=rand()%UserHeroes->number_of_heroes();
                 while (!UserHeroes->get_Hero(target)->IsAlive()){
                     target=rand()%UserHeroes->number_of_heroes();
@@ -173,11 +223,15 @@ void Block::battle()
                 monsters[i]->attack(UserHeroes->get_Hero(target));
             }
         }
-            turn++;
+
+        turn++;
+        for(int k=0; k<debuffs.size(); k++){
+            if(debuffs[k]->getExpirationRound()==turn){
+                delete debuffs[k];
+                debuffs.erase(debuffs.begin()+k);
+            }
+        }
     }
-
-        //reset stats();
-
 }
 
 

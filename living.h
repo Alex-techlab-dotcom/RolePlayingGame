@@ -23,6 +23,8 @@ public:
         return agility;
     }
     bool IsAlive();
+
+    void setAgility(double agility);
 };
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
@@ -57,14 +59,14 @@ public:
     Item* remove_from_Inv(int n);
     void display_stats();
     //bool IsAlive();
-    void attack(Monster* m1);
+    void attack(Monster*);
     void equip();
     void wear(Item* ptr);
     void lose_life(int damage);
     void use_pot(Potion *);
     vector <Potion *>display_pots();
-
-
+    int display_spells();
+    Debuff * use_spell(int, Monster *, int);
 };
 
 
@@ -98,6 +100,12 @@ public:
     void display_stats();
     void lose_life(int damage);
     void attack(Hero*);
+    int getMinDamage() const;
+    int getMaxDamage() const;
+    int getDefence() const;
+    void setMinDamage(int minDamage);
+    void setMaxDamage(int maxDamage);
+    void setDefence(int defence);
 };
 
 class Dragon : public Monster {

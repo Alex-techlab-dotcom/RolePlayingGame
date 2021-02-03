@@ -34,7 +34,8 @@ public:
     void delete_monsters();
     void check_for_battle();
     void battle();
-    //DisplayStats should be implemented here;
+    void display_monsters();
+    //DisplayStats should be implemented here; (?????)
 };
 
 class Grid{
