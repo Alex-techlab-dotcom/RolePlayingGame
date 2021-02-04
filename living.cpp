@@ -1,6 +1,6 @@
 #include "living.h"
 #include <cmath>
-
+#include "deduff.h"
 //LIVING
 Living::Living(string lname,int lvl, double hp, double agil)
 {
@@ -334,13 +334,15 @@ Debuff* Hero::use_spell(int spell, Monster* target, int turn){
         if(target->IsAlive()){
             if(dynamic_cast<IceSpell *> (Abilities[spell])!=nullptr){
                 Debuff * db;
-                db = new Damage_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
+               // Dragon M("alex",4,1.0,1.0,2,2,2);
+               db = new Damage_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
                 target->setMinDamage(floor(target->getMinDamage()-target->getMinDamage()*Abilities[spell]->getDebuff()));
                 target->setMaxDamage(floor(target->getMaxDamage()-target->getMaxDamage()*Abilities[spell]->getDebuff()));
                 return db;
             }
             else if(dynamic_cast<FireSpell *> (Abilities[spell])!=nullptr){
                 Debuff * db;
+               // Damage_Debuff b(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
                 db = new Defence_Debuff(target, turn+2*Abilities[spell]->getRounds(), Abilities[spell]->getDebuff());
                 target->setDefence(floor(target->getDefence()-target->getDefence()*Abilities[spell]->getDebuff()));
                 return db;

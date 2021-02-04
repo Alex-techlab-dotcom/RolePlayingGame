@@ -2,7 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <fstream>
-
+#include "deduff.h"
 
 //COMPANY OF HEROES
 CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)

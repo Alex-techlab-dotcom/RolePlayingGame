@@ -7,7 +7,7 @@
 #include "items.h"
 #include "spells.h"
 using namespace std;
-
+class Debuff;
 class Living{
 protected:
     double max_healthPower;
@@ -28,7 +28,7 @@ public:
 };
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
-
+class Spell;
 class Hero: public Living{
 
 private:
@@ -96,7 +96,7 @@ protected:
     int max_damage;
     int defence;
 public:
-    Monster(string, int, double, double, int, int, int);
+    Monster(string m_name="", int lvl=1, double hp=1.0, double agil=2.0, int min_dmg=2, int max_dmg=1, int def=1);
     void display_stats();
     void lose_life(int damage);
     void attack(Hero*);
@@ -106,6 +106,7 @@ public:
     void setMinDamage(int minDamage);
     void setMaxDamage(int maxDamage);
     void setDefence(int defence);
+
 };
 
 class Dragon : public Monster {
