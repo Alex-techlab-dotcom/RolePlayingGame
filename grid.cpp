@@ -126,7 +126,17 @@ void Block::battle()
         UserHeroes->print();
 
         int choose_move;
+        for (int i = 0; i < 3; ++i) {
+            if (UserHeroes->get_Hero(i) != nullptr){
+                if (UserHeroes->get_Hero(i)->IsAlive()){
+                 UserHeroes->get_Hero(i)->regenerate();
+                }
+            }
 
+        }
+        for (int i = 0; i < monsters.size(); ++i) {
+            monsters[i]->regenerate();
+        }
         if (turn%2==1) {
             cout << "Heroe's turn...\n\n";
             //choose
@@ -134,12 +144,13 @@ void Block::battle()
             {
                 if (UserHeroes->get_Hero(i) != nullptr)
                 {
-                    UserHeroes->get_Hero(i)->regenerate_health();
+
                     if (UserHeroes->get_Hero(i)->IsAlive())
                     {
                         cout<< "1) Attack!\n";
                         cout<< "2) Cast Spell!\n";
                         cout<< "3) Use Potion!\n";
+                        cout<< "4) Change Build!\n";
                         cin>>choose_move;
 
                         switch (choose_move)
@@ -195,6 +206,10 @@ void Block::battle()
 
                                 break;
                             }
+                            case 4:{
+
+                                UserHeroes->get_Hero(i)->equip();
+                            }
                         }
 
                         if (!monsters[selected_monster-1]->IsAlive()){
@@ -230,6 +245,17 @@ void Block::battle()
             if(debuffs[k]->getExpirationRound()==turn){
                 delete debuffs[k];
                 debuffs.erase(debuffs.begin()+k);
+            }
+        }
+    }//BATTLE IS OVER
+    turn--;
+    if (turn%2==1){
+        //heroes won!
+    }else{
+        for (int i = 0; i <3 ; ++i) {
+            if (UserHeroes->get_Hero(i)!= nullptr){
+                UserHeroes->get_Hero(i)->revive();
+                UserHeroes->get_Hero(i)->lose_money();
             }
         }
     }

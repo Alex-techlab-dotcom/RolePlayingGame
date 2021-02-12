@@ -20,7 +20,7 @@ public:
     void get(int &m_level,int& mana_c,int& min_dmg,int& max_dmg);
     virtual void print();
     virtual void battle_display()=0;
-
+    int get_min_lvl();
     int getMinDamage() const;
 
     int getMaxDamage() const;

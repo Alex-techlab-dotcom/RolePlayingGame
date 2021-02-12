@@ -6,7 +6,7 @@ Shop::Shop(const string& W, const string& A,const string& P,const string& S){
     string name,num_of_hands;
     int price,dmg,lvl;
     //WEAPONS
-    ifstream Weapons_file(W);
+    ifstream Weapons_file("weapons.txt");
 
     while (Weapons_file>> name >> price >> lvl >> dmg >> num_of_hands){
 
@@ -108,7 +108,7 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                 cout << "2) Armor!\n";
                 cout << "3) Potions!\n";
                 cout << "4) Spells!\n";
-                cout << "5) Sell\n";
+                cout << "5) Sell!\n";
                 cout << "6) Stop buying with this character!\n";
                 cin >> category;
 
@@ -130,18 +130,21 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                         cin >> Item_num;
                         while (Item_num)
                         {
-                            if (buyers[selected_hero-1]->get_money()>=Weapons[Item_num-1].get_price())//if u can afford the item
-                            {
-                                buyers[selected_hero-1]->reduce_money(Weapons[Item_num-1].get_price());
-                                cout<<"Nice,you just bought " << Weapons[Item_num-1].get_name();
-                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
-                                buyers[selected_hero-1]->place_to_bag(&Weapons[Item_num-1]);
-                                cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
-                            }else
-                            {
-                                cout << "I am sorry you do not have enough gold coins\n";
-                                cout << Weapons[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
-                            }
+                            if (buyers[selected_hero-1]->get_lvl()>=Weapons[Item_num-1].get_min_lvl()){
+                                if (buyers[selected_hero-1]->get_money()>=Weapons[Item_num-1].get_price())//if u can afford the item
+                                {
+                                    buyers[selected_hero-1]->reduce_money(Weapons[Item_num-1].get_price());
+                                    cout<<"Nice,you just bought " << Weapons[Item_num-1].get_name();
+                                    cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                    buyers[selected_hero-1]->place_to_bag(&Weapons[Item_num-1]);
+                                    cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
+                                }else
+                                {
+                                    cout << "I am sorry you do not have enough gold coins\n";
+                                    cout << Weapons[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                }
+                            }else cout << "You are not the apropriate level\n\n";
+
                             cout<< "Type the number of the item you want to buy\n";
                             cout<< "To exit Weapon's item list,type 0\n\n";
                             cin >> Item_num;
@@ -162,20 +165,21 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                         cin >> Item_num;
                         while (Item_num)
                         {
-                            if (buyers[selected_hero-1]->get_money()>=Armors[Item_num-1].get_price())//if u can afford the item
-                            {
-                                buyers[selected_hero-1]->reduce_money(Armors[Item_num-1].get_price());
-                                cout<<"Nice,you just bought " << Armors[Item_num-1].get_name();
-                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
-                                cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
-                                buyers[selected_hero-1]->place_to_bag(&Armors[Item_num-1]);
-                                cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
-                            }else
-                            {
-                                cout << "I am sorry you do not have enough gold coins\n";
-                                cout << Armors[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
-                            }
-
+                            if (buyers[selected_hero-1]->get_lvl()>=Armors[Item_num-1].get_min_lvl()){
+                                if (buyers[selected_hero-1]->get_money()>=Armors[Item_num-1].get_price())//if u can afford the item
+                                {
+                                    buyers[selected_hero-1]->reduce_money(Armors[Item_num-1].get_price());
+                                    cout<<"Nice,you just bought " << Armors[Item_num-1].get_name();
+                                    cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                    cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+                                    buyers[selected_hero-1]->place_to_bag(&Armors[Item_num-1]);
+                                    cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
+                                }else
+                                {
+                                    cout << "I am sorry you do not have enough gold coins\n";
+                                    cout << Armors[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                }
+                            }else cout << "You are not the apropriate level\n\n";
                             cout<< "Type the number of the item you want to buy\n";
                             cout<< "To exit Armor's item list,type 0\n\n";
                             cin >> Item_num;
@@ -195,18 +199,21 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                         cin >> Item_num;
                         while (Item_num)
                         {
-                            if (buyers[selected_hero-1]->get_money()>=Potions[Item_num-1].get_price())//if u can afford the item
-                            {
-                                buyers[selected_hero-1]->reduce_money(Potions[Item_num-1].get_price());
-                                cout<<"Nice,you just bought " << Potions[Item_num-1].get_name();
-                                cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n";
-                                buyers[selected_hero-1]->place_to_bag(&Potions[Item_num-1]);
-                                cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
-                            }else
-                            {
-                                cout << "I am sorry you do not have enough gold coins\n";
-                                cout << Potions[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
-                            }
+                            if (buyers[selected_hero-1]->get_lvl()>=Potions[Item_num-1].get_min_lvl()){
+                                if (buyers[selected_hero-1]->get_money()>=Potions[Item_num-1].get_price())//if u can afford the item
+                                {
+                                    buyers[selected_hero-1]->reduce_money(Potions[Item_num-1].get_price());
+                                    cout<<"Nice,you just bought " << Potions[Item_num-1].get_name();
+                                    cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n";
+                                    buyers[selected_hero-1]->place_to_bag(&Potions[Item_num-1]);
+                                    cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
+                                }else
+                                {
+                                    cout << "I am sorry you do not have enough gold coins\n";
+                                    cout << Potions[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                }
+                            }else cout << "You are not the apropriate level\n\n";
+
 
                             cout<< "Type the number of the item you want to buy\n";
                             cout<< "To exit Potion's item list,type 0\n\n";
@@ -227,57 +234,106 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                             cin >> Item_num;
                             while (Item_num)
                             {
-                                if (buyers[selected_hero-1]->get_money()>=Spells[Item_num-1]->get_price())//if u can afford the item
-                                {
-                                    buyers[selected_hero-1]->reduce_money(Spells[Item_num-1]->get_price());
-                                    cout<<"Nice,you just bought " << Spells[Item_num-1]->get_name()<< "\n";
-                                    cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
-                                    buyers[selected_hero-1]->learn_new_spell(Spells[Item_num-1]);
-                                 //   cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
-                                }else
-                                {
-                                    cout << "I am sorry you do not have enough gold coins\n";
-                                    cout << Spells[Item_num-1]->get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                if (buyers[selected_hero-1]->get_lvl()>=Spells[Item_num-1]->get_min_lvl()){
+                                    if (buyers[selected_hero-1]->get_money()>=Spells[Item_num-1]->get_price())//if u can afford the item
+                                    {
+                                        buyers[selected_hero-1]->reduce_money(Spells[Item_num-1]->get_price());
+                                        cout<<"Nice,you just bought " << Spells[Item_num-1]->get_name()<< "\n";
+                                        cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
+                                        buyers[selected_hero-1]->learn_new_spell(Spells[Item_num-1]);
+                                        //   cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
+                                    }else
+                                    {
+                                        cout << "I am sorry you do not have enough gold coins\n";
+                                        cout << Spells[Item_num-1]->get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                    }
                                 }
+
                                 cout<< "Type the number of the item you want to buy\n";
                                 cout<< "To exit Spell's item list,type 0\n\n";
                                 cin >> Item_num;
                             }
                             break;
                     case 5:
-                            if (buyers[selected_hero-1]->Inventory_size()!=0)
-                            {
-                                cout << "Your inventory is: \n";
-                                buyers[selected_hero-1]->display_inventory();
-                                Item_num=1;
-                                while(Item_num and buyers[selected_hero-1]->Inventory_size()!=0)
-                                {
-                                    cout<< "Type the number of the item you want to sell\n";
-                                    cin>>Item_num;
+                            int option=1;
 
-                                    if (Item_num>buyers[selected_hero-1]->Inventory_size())
+                            while (option){
+                                cout << "0) Stop selling!\n";
+                                cout << "1) Sell from inventory!\n";
+                                cout << "2) Sell Spells\n";
+                                cin>>option;
+
+                                if(option==1){
+                                    if (buyers[selected_hero-1]->Inventory_size()!=0)
                                     {
-                                        cout << "I am sorry you do not have that many items, choose again...\n";
-                                        cin>>Item_num;
-                                    }else
-                                    {
-                                        Item* i=buyers[selected_hero-1]->remove_from_Inv(Item_num);
-                                        buyers[selected_hero-1]->increase_money(i->get_price()/2);
-                                        if(buyers[selected_hero-1]->Inventory_size()!=0)
+                                        cout << "Your inventory is: \n";
+                                        buyers[selected_hero-1]->display_inventory();
+                                        Item_num=1;
+                                        while(Item_num and buyers[selected_hero-1]->Inventory_size()!=0)
                                         {
-                                            cout << "Your inventory is: \n";
-                                            buyers[selected_hero-1]->display_inventory();
-                                        }else cout << "Inventory is empty\n\n";
+                                            cout<< "Type the number of the item you want to sell\n";
+                                            cin>>Item_num;
+
+                                            if (Item_num>buyers[selected_hero-1]->Inventory_size())
+                                            {
+                                                cout << "I am sorry you do not have that many items, choose again...\n";
+                                                cin>>Item_num;
+                                            }else
+                                            {
+                                                Item* i=buyers[selected_hero-1]->remove_from_Inv(Item_num);
+                                                buyers[selected_hero-1]->increase_money(i->get_price()/2);
+                                                if(buyers[selected_hero-1]->Inventory_size()!=0)
+                                                {
+                                                    cout << "Your inventory is: \n";
+                                                    buyers[selected_hero-1]->display_inventory();
+                                                }else cout << "Inventory is empty\n\n";
 
 
-                                        cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+                                                cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
 
+                                            }
+
+                                            if (buyers[selected_hero-1]->Inventory_size()!=0) cout << "Press 0 to stop selling items from Inventory \n";
+
+                                        }
+                                    }else cout << "Your Inventory is empty...\n\n";
+
+                                } else{
+                                    //sell items;
+                                    int selected_sp=1;
+                                    int total_spells;
+                                    while (selected_sp)
+                                    {
+                                        if (buyers[selected_hero-1]->has_any_spells())
+                                        {
+                                            cout<<"Your spells are...\n";
+                                            total_spells=buyers[selected_hero-1]->display_spells();
+                                            cout<<"Press 0 if you want to stop selling spells!\n";
+
+                                            cin>>selected_sp;
+
+                                            while (selected_sp>total_spells){
+                                                cout <<"You dodnt have that many spells!\n";
+                                                cin>>selected_sp;
+                                            }
+
+                                            if (selected_sp)
+                                            {
+                                                Spell* ptr=buyers[selected_hero-1]->remove_spell(selected_sp-1);
+                                                buyers[selected_hero-1]->increase_money(ptr->get_price()/2);
+                                                cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
+                                            }
+
+                                        }else {
+                                            cout << "You do not have any spells right now\n";
+                                            selected_sp=0;
+                                        }
                                     }
 
-                                        if (buyers[selected_hero-1]->Inventory_size()!=0) cout << "Press 0 to stop selling \n";
 
                                 }
-                            }else cout << "Your Inventory is empty...\n\n";
+                            }
+
 
                         break;
                 }

@@ -43,6 +43,8 @@ int Spell::getMinDamage() const {
 int Spell::getMaxDamage() const {
     return max_damage;
 }
+int Spell:: get_min_lvl() {return min_level;}
+
 
 //ICE SPELL
 IceSpell::IceSpell(std::string is_name, int is_price, int is_min_level, int is_mana_cost, int is_min, int is_max, double  is_dex, int is_rounds):Spell(is_name, is_price, is_min_level, is_mana_cost, is_min, is_max) {

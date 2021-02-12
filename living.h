@@ -8,6 +8,7 @@
 #include "spells.h"
 using namespace std;
 class Debuff;
+
 class Living{
 protected:
     double max_healthPower;
@@ -23,12 +24,12 @@ public:
         return agility;
     }
     bool IsAlive();
-
+    virtual void regenerate()=0;
     void setAgility(double agility);
 };
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
-class Spell;
+//class Spell;
 class Hero: public Living{
 
 private:
@@ -44,10 +45,11 @@ protected:
     Spell* Abilities[4];
 
 public:
-    Hero(string, double, double,int, double);
+    Hero(const string&, double, double,int, double);
     virtual void level_up()=0;
     void lose_money();
-    void regenerate_health();
+    void revive();
+    void regenerate();
     int get_money();
     void reduce_money(int );
     void increase_money(int );
@@ -67,6 +69,9 @@ public:
     vector <Potion *>display_pots();
     int display_spells();
     Debuff * use_spell(int, Monster *, int);
+    bool has_any_spells();
+    Spell* remove_spell(int );
+    int get_lvl();
 };
 
 
@@ -106,6 +111,7 @@ public:
     void setMinDamage(int minDamage);
     void setMaxDamage(int maxDamage);
     void setDefence(int defence);
+    void regenerate();
 
 };
 

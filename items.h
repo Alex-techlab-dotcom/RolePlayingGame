@@ -16,6 +16,7 @@ public:
     void get( std::string& lname,int& lprice,  int& lmin_level,int& sell_price2);
     int  get_price();
     std::string get_name();
+    int get_min_lvl();
 };
 
 class Weapon : public Item{

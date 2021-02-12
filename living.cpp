@@ -2,9 +2,9 @@
 #include <cmath>
 #include "deduff.h"
 //LIVING
-Living::Living(string lname,int lvl, double hp, double agil)
+Living::Living(string lname,int lvl, double hp, double agil):name(lname)
 {
-    name=lname;
+  //  name=lname;
     level=lvl;
     max_healthPower=hp;
     current_hp=max_healthPower;
@@ -18,7 +18,7 @@ string Living::get_name(){
 
 //WARRIOR
 
-Warrior::Warrior(string w_name):Hero(w_name, 200, 0.25, 75, 0.05)
+Warrior::Warrior(string w_name):Hero(std::move(w_name), 200, 0.25, 75, 0.05)
 {
     cout << "A new warrior named as " << name << " has been created\n";
 }
@@ -65,7 +65,7 @@ void Sorcerer::level_up()
 
 //HERO
 
-Hero::Hero(string h_name, double hp, double agil, int str, double dext):Living(name, 1, hp, agil)
+Hero::Hero(const string& h_name, double hp, double agil, int str, double dext):Living(h_name, 1, hp, agil)
 {
     exp=0;
     magicPower=100;
@@ -91,14 +91,17 @@ void Hero::lose_money()
     money=money/2;
 }
 
-void Hero::regenerate_health()
+void Hero::regenerate()
 {
     current_hp+= max_healthPower*0.2;
-
+    current_magic_power+=(int )(current_magic_power*0.2);
     //we dont want to regenerate more hp than the hero initially has!
     if (current_hp>max_healthPower)current_hp=max_healthPower;
+    if (current_magic_power>magicPower)current_magic_power=magicPower;
 }
-
+void Hero::revive() {
+    current_hp=max_healthPower/2;
+}
 int Hero::get_money()
 {
     return money;
@@ -125,6 +128,7 @@ void Hero::learn_new_spell(Spell* s)
         if (Abilities[i] == nullptr)
         {
             Abilities[i]=s;
+            break;
         }
     }
 }
@@ -236,18 +240,22 @@ void Hero::wear(Item* ptr)
 
 void Hero::equip()
 {
-    display_inventory();
+ if (Inventory_size()){
+     display_inventory();
 
-    int item_num;
+     int item_num;
 
-    cout << "Choose one item to equip...\n";
-    cout <<"Press 0 to exit\n";
-    cin>>item_num;
-        while (item_num)
-        {
-            wear(remove_from_Inv(item_num));
-            cin>>item_num;
-        }
+     cout << "Choose one item to equip...\n";
+     cout <<"Press 0 to exit\n";
+     cin>>item_num;
+     while (item_num)
+     {
+         wear(remove_from_Inv(item_num));
+         cin>>item_num;
+         display_inventory();
+     }
+ }else cout << "You havent any items yet...\n\n";
+
 
 }
 
@@ -360,7 +368,27 @@ Debuff* Hero::use_spell(int spell, Monster* target, int turn){
     else
         return nullptr;
 }
+bool Hero:: has_any_spells()
+{
+    if(Abilities[0]== nullptr)return false;
+    return true;
+}
 
+Spell* Hero::remove_spell(int spell_num)
+{
+    Spell *ptr=Abilities[spell_num];
+    if(spell_num!=3){
+        for (int i = spell_num; i < 3; ++i) {
+            Abilities[i]=Abilities[i+1];
+            Abilities[i+1]= nullptr;
+        }
+    }
+    return ptr;
+}
+
+int Hero::get_lvl() {
+    return level;
+}
 //MONSTER
 Monster::Monster(string m_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Living(m_name, lvl, hp, agil)
 {
@@ -409,7 +437,11 @@ void Monster::setMaxDamage(int maxDamage) {
 void Monster::setDefence(int defence) {
     Monster::defence = defence;
 }
-
+void Monster::regenerate() {
+    current_hp+= max_healthPower*0.35;
+       //we dont want to regenerate more hp than the hero initially has!
+    if (current_hp>max_healthPower)current_hp=max_healthPower;
+}
 //DRAGON
 Dragon::Dragon(string d_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Monster(d_name, lvl, hp, agil, min_dmg, max_dmg, def)
 {

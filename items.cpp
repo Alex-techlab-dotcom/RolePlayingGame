@@ -26,6 +26,8 @@ string Item::get_name()
     return name;
 }
 
+int Item::get_min_lvl() {return min_level;}
+
 //WEAPON
 Weapon::Weapon(std::string w_name, int w_price, int w_min_level, int w_damage, bool w_hands):Item(w_name, w_price, w_min_level){
     damage_per_attack=w_damage;
