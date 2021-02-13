@@ -114,7 +114,7 @@ void Block::display_monsters(){
 
 void Block::battle()
 {
-    int turn=1,selected_monster;
+    int turn=1,selected_monster,number_of_monsters=monsters.size();
     while (!monsters.empty() and UserHeroes->alive() )
     {
         vector<Debuff*> debuffs;
@@ -140,8 +140,8 @@ void Block::battle()
         if (turn%2==1) {
             cout << "Heroe's turn...\n\n";
             //choose
-            for (int i = 0; i < 3; ++i)
-            {
+            for (int i = 0; i < 3; ++i){
+
                 if (UserHeroes->get_Hero(i) != nullptr)
                 {
 
@@ -211,12 +211,17 @@ void Block::battle()
                                 UserHeroes->get_Hero(i)->equip();
                             }
                         }
-
+                        //if monster is dead!!!
                         if (!monsters[selected_monster-1]->IsAlive()){
                             for(int k=0; k<debuffs.size(); k++){
                                 if(debuffs[k]->getTarget()==monsters[selected_monster-1]){
                                     delete debuffs[k];
                                     debuffs.erase(debuffs.begin()+k);
+                                }
+                            }
+                            for (int j = 0; j <3 ; ++j) {
+                                if (UserHeroes->get_Hero(j)!= nullptr){
+                                    UserHeroes->get_Hero(j)->gain_exp(BASIC_EXP*UserHeroes->get_Hero(j)->get_lvl());
                                 }
                             }
                             delete monsters[selected_monster-1];
@@ -251,6 +256,15 @@ void Block::battle()
     turn--;
     if (turn%2==1){
         //heroes won!
+        for (int i = 0; i <3 ; ++i) {//EARN GOLD BASED ON LVL AND  NUMBER OF MONSTERS THEY SLAIN!
+            if (UserHeroes->get_Hero(i)!= nullptr){
+                if (UserHeroes->get_Hero(i)->IsAlive())
+                    UserHeroes->get_Hero(i)->increase_money(UserHeroes->get_Hero(i)->get_lvl()*STANDARD_GOLD*number_of_monsters);
+                else
+                    UserHeroes->get_Hero(i)->revive();
+            }
+
+        }
     }else{
         for (int i = 0; i <3 ; ++i) {
             if (UserHeroes->get_Hero(i)!= nullptr){

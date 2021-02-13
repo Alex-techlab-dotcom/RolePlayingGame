@@ -9,6 +9,13 @@
 using namespace std;
 class Debuff;
 
+#define LEVEL_TWO 1000
+#define LEVEL_THREE 2000
+#define LEVEL_FOUR 3000
+#define LEVEL_FIVE 4000
+#define BASIC_EXP 100
+#define STANDARD_GOLD 100
+
 class Living{
 protected:
     double max_healthPower;
@@ -26,6 +33,7 @@ public:
     bool IsAlive();
     virtual void regenerate()=0;
     void setAgility(double agility);
+    int get_lvl();
 };
 
 class Monster; //Class Forwarding,it helps so attack() function takes Monster pointer as argument;
@@ -71,7 +79,7 @@ public:
     Debuff * use_spell(int, Monster *, int);
     bool has_any_spells();
     Spell* remove_spell(int );
-    int get_lvl();
+    void gain_exp(int );
 };
 
 

@@ -162,9 +162,26 @@ Item* Hero::remove_from_Inv(int n)
 void Hero::display_stats(){
     cout << name << endl;
     cout << level << endl;
-    cout << "XP: " << exp << endl;
+    switch (level) {
+        case 1:{
+            cout << "XP: " << exp << "/"<< LEVEL_TWO<<endl;
+            break;
+        }
+        case 2:{
+            cout << "XP: " << exp << "/"<< LEVEL_THREE<<endl;
+            break;
+        }
+        case 3:{
+            cout << "XP: " << exp << "/"<< LEVEL_FOUR<<endl;
+            break;
+        }
+        case 4:{
+            cout << "XP: " << exp << "/"<< LEVEL_FIVE<<endl;
+            break;
+        }
+    }
     cout << "HP : " << current_hp << "/" << max_healthPower <<endl;
-    cout << "Mana: " << magicPower << endl;
+    cout << "Mana: " << current_magic_power<< "/" << magicPower<<  endl;
     cout << "Agility: " << agility << endl;
     cout << "Dexterity: " << dexterity << endl;
 }
@@ -386,9 +403,50 @@ Spell* Hero::remove_spell(int spell_num)
     return ptr;
 }
 
-int Hero::get_lvl() {
+int Living::get_lvl() {
     return level;
 }
+
+void Hero::gain_exp(int experience) {
+
+    switch (level) {
+
+        case 1:{
+            if(exp+experience<=LEVEL_TWO){
+                level++;//Becomes level 2!
+                exp=exp+experience-1000;
+            }else exp+=experience;
+            break;
+        }
+        case 2:{
+            if (exp + experience<=LEVEL_THREE){
+                level++;//Becomes level 3!
+                exp=exp+experience-2000;
+            }else exp+=experience;
+            break;
+        }
+        case 3:{
+            if (exp+experience<=LEVEL_FOUR){
+                level++;//Becomes level 4!
+                exp=exp+experience-3000;
+            } else exp+=experience;
+            break;
+        }
+        case 4:{
+            if (exp+experience<=LEVEL_FIVE){
+                level++;//Becomes level 5!
+                exp=exp+experience-4000;
+            }else exp+=experience;
+            break;
+        }case 5:{
+            exp=4000;
+            break;
+        }
+    }
+
+
+}
+
 //MONSTER
 Monster::Monster(string m_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Living(m_name, lvl, hp, agil)
 {
@@ -442,6 +500,9 @@ void Monster::regenerate() {
        //we dont want to regenerate more hp than the hero initially has!
     if (current_hp>max_healthPower)current_hp=max_healthPower;
 }
+
+
+
 //DRAGON
 Dragon::Dragon(string d_name, int lvl, double hp, double agil, int min_dmg, int max_dmg, int def):Monster(d_name, lvl, hp, agil, min_dmg, max_dmg, def)
 {
