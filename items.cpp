@@ -29,9 +29,12 @@ string Item::get_name()
 int Item::get_min_lvl() {return min_level;}
 
 //WEAPON
-Weapon::Weapon(std::string w_name, int w_price, int w_min_level, int w_damage, bool w_hands):Item(w_name, w_price, w_min_level){
-    damage_per_attack=w_damage;
-    two_hands_needed=w_hands;
+Weapon::Weapon(std::string w_name, int w_price, int w_min_level, int w_damage, int  w_hands):Item(w_name, w_price, w_min_level),
+two_hands_needed(w_hands),damage_per_attack(w_damage)
+{
+    cout << "two hands needed " << two_hands_needed <<"\n";
+   // damage_per_attack=w_damage;
+    //two_hands_needed=w_hands;//error
 }
 
 void Weapon::print_Item()
@@ -45,15 +48,17 @@ void Weapon::print_Item()
     cout << "Sell price :" << sell_price << " gold coins\n";
     cout << "Damage per hit :" << damage_per_attack << "\n";
     if (two_hands_needed)cout <<"Two Hands\n";
-    else cout <<"One Hand\n";
+    else if(two_hands_needed)cout <<"One Hand\n";
 }
 
 int Weapon::get_damage()
 {
+
     return damage_per_attack;
 }
-bool Weapon::two_hands()
+int  Weapon::two_hands()
 {
+    cout << "pointer " << this << "\n";
     return two_hands_needed;
 }
 

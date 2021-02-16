@@ -22,12 +22,12 @@ public:
 class Weapon : public Item{
 private:
     int damage_per_attack;
-    bool two_hands_needed;
+    int two_hands_needed;
 public:
-    Weapon(std::string, int, int, int, bool);
+    Weapon(std::string, int, int, int, int);
     void print_Item();
     int get_damage();
-    bool two_hands();
+    int two_hands();
 };
 
 class Armor : public Item{

@@ -11,9 +11,11 @@ int main() {
 
     Warrior* w1= new Warrior("Alex");
     Paladin* p1=new Paladin("tasos");
+  //  Paladin* p=new Paladin("Nikos");
     CompanyOfHeroes c(w1,p1);
     Shop S("weapon.txt","Armor.txt","Potions.txt","Spells.txt");
    // S.enter_shop(&c);
+   map.place_to_map(&c);
     char input;
             while(input!='Q'){
                 vector<char>moves=map.option(c.get_x(),c.get_y());
@@ -28,7 +30,7 @@ int main() {
 
                 switch (input) {
                     case 'U':
-                        map.move_up(&c);
+                       map.move_up(&c);
                         break;
 
                     case 'D':
@@ -55,12 +57,28 @@ int main() {
                     case 'M':
                         S.enter_shop(&c);
                         break;
+                    case 'E':
+                        for (int i = 0; i <3 ; ++i) {
+                            if (c.get_Hero(i)!= nullptr){
+                                c.get_Hero(i)->equip();
+                            }
+                        }
                 }
 
                 cout<<"x: " << c.get_x() << "\n";
                 cout << "y: " << c.get_y() << "\n";
-
                 map.check_battle(c.get_x(),c.get_y());
+                for (int i = 0; i < 3; ++i) {
+                    if (c.get_Hero(i)!= nullptr){
+                        if (c.get_Hero(i)->get_lvl()==3){
+                            map.populate_grid(2);
+                        }else if (c.get_Hero(i)->get_lvl()==4){
+                            map.populate_grid(3);
+                        }
+                    }
+                }
+
+
 
 
             }

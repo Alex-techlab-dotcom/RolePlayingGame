@@ -10,6 +10,7 @@ CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)
     MyHeroes[0]=h1;
     MyHeroes[1]=h2;
     MyHeroes[2]=h3;
+    if(MyHeroes[2]== nullptr)cout << "HI\n";
     x=0;
     y=0;
 }
@@ -44,9 +45,9 @@ void CompanyOfHeroes::change_pos(int x1,int y1)
 
 Hero* CompanyOfHeroes::get_Hero(int n)
 {
-    if(MyHeroes[n-1]!= nullptr)
+    if(MyHeroes[n]!= nullptr)
     {
-        return MyHeroes[n-1];
+        return MyHeroes[n];
     }else
         return nullptr;
 }
@@ -100,7 +101,7 @@ void Block::delete_monsters() {
 }
 void Block::check_for_battle()
 {
-    if (!monsters.empty())battle();
+    if (!monsters.empty()){battle();}
 
 }
 bool Block::is_non_accessible() {
@@ -120,6 +121,7 @@ void Block::display_monsters(){
     for(auto p:monsters){
         cout<<i<<") ";
         p->display_stats();
+        cout << "\n";
         i++;
     }
 }
@@ -127,7 +129,7 @@ void Block::display_monsters(){
 void Block::battle()
 {
     cout << "A BATTLE IS ABOUT TO BEGIN!\n\n";
-    int turn=1,selected_monster,number_of_monsters=monsters.size();
+    int turn=1,selected_monster=1,number_of_monsters=monsters.size();
     while (!monsters.empty() and UserHeroes->alive() )
     {
         vector<Debuff*> debuffs;
@@ -135,6 +137,7 @@ void Block::battle()
         for (int i = 0; i <monsters.size() ; ++i) {
             cout<<i+1<<") ";
            monsters[i]->display_stats();
+           cout<<"\n";
         }
         UserHeroes->print();
 
@@ -143,11 +146,12 @@ void Block::battle()
             if (UserHeroes->get_Hero(i) != nullptr){
                 if (UserHeroes->get_Hero(i)->IsAlive()){
                  UserHeroes->get_Hero(i)->regenerate();
+                 UserHeroes->get_Hero(i)->display_stats();
+                 cout << "\n";
                 }
             }
-
         }
-        for (int i = 0; i < monsters.size(); ++i) {
+        for (int i = 0; i < monsters.size(); ++i){
             monsters[i]->regenerate();
         }//DISPLAY STATS()
         if (turn%2==1) {
@@ -159,15 +163,14 @@ void Block::battle()
                 {
 
                     if (UserHeroes->get_Hero(i)->IsAlive())
-                    {
+                    {   cout<<UserHeroes->get_Hero(i)->get_name()<<" choose your next move...\n";
                         cout<< "1) Attack!\n";
                         cout<< "2) Cast Spell!\n";
                         cout<< "3) Use Potion!\n";
                         cout<< "4) Change Build!\n";
                         cin>>choose_move;
 
-                        switch (choose_move)
-                        {
+                        switch (choose_move){
                             case 1: {
                                 cout << "Choose monster to attack...\n\n";
                                 display_monsters();
@@ -216,7 +219,6 @@ void Block::battle()
                                 }
 
                                 UserHeroes->get_Hero(i)->use_pot(hero_pots[chosen_pot - 1]);
-
                                 break;
                             }
                             case 4:{
@@ -240,6 +242,7 @@ void Block::battle()
                             delete monsters[selected_monster-1];
                             monsters.erase(monsters.begin()+selected_monster-1);
                         }
+                        if(!monsters.size())break;
 
                     }
 
@@ -248,6 +251,7 @@ void Block::battle()
             }
         }
         else {
+            cout << "Monsters's turn...\n\n";
             int target;
             for(int i = 0; i <monsters.size() ; ++i) {
                 target=rand()%UserHeroes->number_of_heroes();
@@ -257,7 +261,6 @@ void Block::battle()
                 monsters[i]->attack(UserHeroes->get_Hero(target));
             }
         }
-
         turn++;
         for(int k=0; k<debuffs.size(); k++){
             if(debuffs[k]->getExpirationRound()==turn){
@@ -268,7 +271,7 @@ void Block::battle()
     }//BATTLE IS OVER
     turn--;
     if (turn%2==1){
-        //heroes won!
+        cout <<"heroes won!\n";
         for (int i = 0; i <3 ; ++i) {//EARN GOLD BASED ON LVL AND  NUMBER OF MONSTERS THEY SLAIN!
             if (UserHeroes->get_Hero(i)!= nullptr){
                 if (UserHeroes->get_Hero(i)->IsAlive())
@@ -279,6 +282,7 @@ void Block::battle()
 
         }
     }else{
+        cout<< "Monsters won!\n";
         for (int i = 0; i <3 ; ++i) {
             if (UserHeroes->get_Hero(i)!= nullptr){
                 UserHeroes->get_Hero(i)->revive();
@@ -311,7 +315,13 @@ Grid::Grid(){
             else Map[i][j]=new Block("common");
         }
     }
+    populate_grid(1);
 }
+
+void Grid::place_to_map(CompanyOfHeroes* c){
+    Map[0][0]->UserHeroes=c;
+}
+
 
 void Grid::move_right(CompanyOfHeroes* c) {
     Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
@@ -385,6 +395,7 @@ void Grid::delete_monsters() {
     for(int i=0; i<10; i++) {
         for (int j = 0; j < 10; j++)
             Map[i][j]->delete_monsters();
+
     }
 }
 

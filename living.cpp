@@ -68,6 +68,7 @@ void Sorcerer::level_up()
 Hero::Hero(const string& h_name, double hp, double agil, int str, double dext):Living(h_name, 1, hp, agil)
 {
     exp=0;
+    current_magic_power=100;
     magicPower=100;
     money=1200;
     for(int i=0; i<4; i++)
@@ -186,71 +187,78 @@ void Hero::display_stats(){
     cout << "Dexterity: " << dexterity << endl;
 }
 
-void Hero::wear(Item* ptr)
+void Hero::wear(Item* ptr1)
 {
-    if (dynamic_cast<Weapon*>(ptr)!= nullptr)//this means ptr is Weapon type pointer;
+    if (dynamic_cast<Weapon*>(ptr1)!= nullptr)//this means ptr is Weapon type pointer;
     {
 
-            if (dynamic_cast<Weapon*>(ptr)->two_hands())
-            {
+           if (dynamic_cast<Weapon*>(ptr1)->two_hands()==1)
+           {
+
                 //two hands means both left and right hand pointers points to the same weapon
-                    if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr);
+                    if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr1);
                     else{
                         place_to_bag(B.right_hand);
-                        B.right_hand=dynamic_cast<Weapon*>(ptr);
+                        B.right_hand=dynamic_cast<Weapon*>(ptr1);
                     }
 
-                    if (B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr);
+                    if (B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr1);
                     else{
                         place_to_bag(B.left_hand);
-                        B.left_hand=dynamic_cast<Weapon*>(ptr);
+                        B.left_hand=dynamic_cast<Weapon*>(ptr1);
                     }
             } else{
                 //One hand weapon
                 //first checks if the equiped weapon is two haned;
-                        if (B.left_hand->two_hands())
-                        {
-                            place_to_bag(B.left_hand);//put the old weapon to bug
-                            B.right_hand= nullptr;// the other hand is now free
-                            B.left_hand=(Weapon*)ptr;
-                                    //dynamic_cast<Weapon*>(ptr);
-                        }else{
+                if (B.left_hand!= nullptr){
+                    if (B.left_hand->two_hands())
+                    {
+                        place_to_bag(B.left_hand);//put the old weapon to bug
+                        B.right_hand= nullptr;// the other hand is now free
+                        B.left_hand=(Weapon*)ptr1;
+                        //dynamic_cast<Weapon*>(ptr);
+                    }else{
 
-                                if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr);
-                                else if(B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr);
-                                else{
-                                    //Both hands already have weapons
-                                    cout <<"Choose which weapon you want to replace...\n\n";
+                        if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr1);
+                        else if(B.left_hand== nullptr)B.left_hand=dynamic_cast<Weapon*>(ptr1);
+                        else{
+                            //Both hands already have weapons
+                            cout <<"Choose which weapon you want to replace...\n\n";
 
-                                    cout<<"Left:\n";
-                                    B.left_hand->print_Item();
+                            cout<<"Left:\n";
+                            B.left_hand->print_Item();
 
-                                    cout <<"Right: \n";
-                                    B.right_hand->print_Item();
+                            cout <<"Right: \n";
+                            B.right_hand->print_Item();
 
-                                    string hand;
-                                    cin>>hand;
+                            string hand;
+                            cin>>hand;
 
-                                        if (hand=="Left")
-                                        {
-                                            place_to_bag(B.left_hand);
-                                            B.left_hand=B.left_hand=dynamic_cast<Weapon*>(ptr);
-                                        }else{
-                                            place_to_bag(B.right_hand);
-                                            B.right_hand=dynamic_cast<Weapon*>(ptr);
-                                        }
-                                }
+                            if (hand=="Left")
+                            {
+                                place_to_bag(B.left_hand);
+                                B.left_hand=B.left_hand=dynamic_cast<Weapon*>(ptr1);
+                            }else{
+                                place_to_bag(B.right_hand);
+                                B.right_hand=dynamic_cast<Weapon*>(ptr1);
+                            }
+                        }
 
-                         }
+                    }
+                }else {
+                    B.left_hand = dynamic_cast<Weapon *>(ptr1);
+                    cout << "top\n";
+                }
+
             }
 
     }else {//it is armor type;
         if (B.chest== nullptr)
         {
-            B.chest=dynamic_cast<Armor*>(ptr);
+            B.chest=dynamic_cast<Armor*>(ptr1);
         }else{
             place_to_bag(B.chest);//we put it to bag so we can wear the other item;
-            B.chest=dynamic_cast<Armor*>(ptr);
+            B.chest=dynamic_cast<Armor*>(ptr1);
         }
     }
 }
@@ -259,7 +267,7 @@ void Hero::equip()
 {
  if (Inventory_size()){
      display_inventory();
-
+     Item *ptr;
      int item_num;
 
      cout << "Choose one item to equip...\n";
@@ -267,9 +275,16 @@ void Hero::equip()
      cin>>item_num;
      while (item_num)
      {
-         wear(remove_from_Inv(item_num));
-         cin>>item_num;
-         display_inventory();
+         ptr=remove_from_Inv(item_num);
+         cout<<"two hands "<<dynamic_cast<Weapon*>(ptr)->two_hands()<<"\n";
+         wear(ptr);
+         if (Inventory_size()){
+             display_inventory();
+             cout << "Choose one item to equip...\n";
+             cout <<"Press 0 to exit\n";
+             cin>>item_num;
+         }else break;
+
      }
  }else cout << "You havent any items yet...\n\n";
 
@@ -284,6 +299,7 @@ void Hero::lose_life(int damage)
     }
     damage=damage-damage*defence;
     current_hp=current_hp-damage;
+    cout<<get_name() << " took  " << damage << " damage\n";
     if(current_hp<0)current_hp=0;
 }
 
@@ -291,6 +307,7 @@ void Monster::lose_life(int damage)
 {
     double pain=damage-defence;
     current_hp=current_hp-pain;
+    cout << get_name() << " took " << pain << "damage!\n";
     if(current_hp<0)current_hp=0;
 }
 
@@ -304,12 +321,13 @@ void Hero::attack(Monster *m1)
         {
             //we have two hand weapon
             m1->lose_life(B.left_hand->get_damage());
+
         } else
         {
             if (B.left_hand!= nullptr)m1->lose_life(B.left_hand->get_damage());
             if(B.right_hand!= nullptr)m1->lose_life(B.right_hand->get_damage());
         }
-    }
+    }else cout << m1->get_name() << " dodged "<< get_name()<<"'s attack\n";
 
 }
 
@@ -412,29 +430,29 @@ void Hero::gain_exp(int experience) {
     switch (level) {
 
         case 1:{
-            if(exp+experience<=LEVEL_TWO){
-                level++;//Becomes level 2!
+            if(exp+experience>=LEVEL_TWO){
+                level_up();//Becomes level 2!
                 exp=exp+experience-1000;
             }else exp+=experience;
             break;
         }
         case 2:{
-            if (exp + experience<=LEVEL_THREE){
-                level++;//Becomes level 3!
+            if (exp + experience>=LEVEL_THREE){
+                level_up();//Becomes level 3!
                 exp=exp+experience-2000;
             }else exp+=experience;
             break;
         }
         case 3:{
-            if (exp+experience<=LEVEL_FOUR){
-                level++;//Becomes level 4!
+            if (exp+experience>=LEVEL_FOUR){
+                level_up();//Becomes level 4!
                 exp=exp+experience-3000;
             } else exp+=experience;
             break;
         }
         case 4:{
-            if (exp+experience<=LEVEL_FIVE){
-                level++;//Becomes level 5!
+            if (exp+experience>=LEVEL_FIVE){
+                level_up();//Becomes level 5!
                 exp=exp+experience-4000;
             }else exp+=experience;
             break;
@@ -470,6 +488,7 @@ void Monster::attack(Hero *hero)
     double dodge=hero->get_agility()*100;
     int random_num=rand()%100+1;
     if ((double )random_num>dodge)hero->lose_life(hit);
+    else cout<< hero->get_name() << " dodged the attack!\n";
 }
 
 int Monster::getMinDamage() const {
