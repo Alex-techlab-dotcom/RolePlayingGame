@@ -10,6 +10,8 @@ CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)
     MyHeroes[0]=h1;
     MyHeroes[1]=h2;
     MyHeroes[2]=h3;
+    x=0;
+    y=0;
 }
 
 bool CompanyOfHeroes::alive()
@@ -96,11 +98,21 @@ void Block::delete_monsters() {
 
     monsters.clear();
 }
-/*void Block::check_for_battle()
+void Block::check_for_battle()
 {
-    if (!monsters.empty())//call battle function();
+    if (!monsters.empty())battle();
 
-}*/
+}
+bool Block::is_non_accessible() {
+    if (TypeOfBlock=="Non_accessible")return true;
+    return false;
+}
+
+bool Block::is_market(){
+    if (TypeOfBlock=="Market")return true;
+    return false;
+}
+
 
 void Block::display_monsters(){
     int i=1;
@@ -114,6 +126,7 @@ void Block::display_monsters(){
 
 void Block::battle()
 {
+    cout << "A BATTLE IS ABOUT TO BEGIN!\n\n";
     int turn=1,selected_monster,number_of_monsters=monsters.size();
     while (!monsters.empty() and UserHeroes->alive() )
     {
@@ -136,7 +149,7 @@ void Block::battle()
         }
         for (int i = 0; i < monsters.size(); ++i) {
             monsters[i]->regenerate();
-        }
+        }//DISPLAY STATS()
         if (turn%2==1) {
             cout << "Heroe's turn...\n\n";
             //choose
@@ -301,23 +314,27 @@ Grid::Grid(){
 }
 
 void Grid::move_right(CompanyOfHeroes* c) {
+    Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x() + 1][c->get_y()]->UserHeroes = c;
-    c->change_pos(c->get_x() - 1, c->get_y());
-    //check_for_battle()
+    c->change_pos(c->get_x() + 1, c->get_y());
+
 }
 
 void Grid::move_up(CompanyOfHeroes* c){
+    Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x()][c->get_y()+1]->UserHeroes=c;
     c->change_pos(c->get_x(),c->get_y()+1);
 }
 
 
 void Grid::move_down(CompanyOfHeroes* c){
+    Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x()][c->get_y()-1]->UserHeroes=c;
     c->change_pos(c->get_x(),c->get_y()-1);
 }
 
 void Grid::move_left(CompanyOfHeroes* c) {
+    Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x() - 1][c->get_y()]->UserHeroes = c;
     c->change_pos(c->get_x() - 1, c->get_y());
 }
