@@ -14,7 +14,7 @@ Shop::Shop(const string& W, const string& A,const string& P,const string& S){
         {
             Weapon* w=new Weapon(name,price,lvl,dmg, 0);
             Weapons.push_back(w);
-        }else /*(num_of_hands=="TwoHand")*/{
+        }else {
             Weapon* w1=new Weapon(name,price,lvl,dmg, 1);
             Weapons.push_back(w1);
         }

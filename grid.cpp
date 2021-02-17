@@ -60,11 +60,11 @@ void CompanyOfHeroes::DisplayStats()
         {
             cout << i+1 << ") " << MyHeroes[i]->get_name() << endl;
         }
-    }cout << "4) Exit\n";
+    }cout <<number_of_heroes()+1 <<") Exit\n";
 
     cin>>hero;
 
-    while (hero!=4)
+    while (hero!=number_of_heroes()+1)
     {
         MyHeroes[hero-1]->display_stats();
         cin>> hero;
@@ -132,14 +132,17 @@ void Block::battle()
     int turn=1,selected_monster=1,number_of_monsters=monsters.size();
     while (!monsters.empty() and UserHeroes->alive() )
     {
+
+        cout << "                           ROUND " << turn << "\n\n";
         vector<Debuff*> debuffs;
         Debuff * spell_db;
-        for (int i = 0; i <monsters.size() ; ++i) {
+        cout<<"\n\n";
+       /* for (int i = 0; i <monsters.size() ; ++i) {
             cout<<i+1<<") ";
            monsters[i]->display_stats();
            cout<<"\n";
-        }
-        UserHeroes->print();
+        }*/
+       // UserHeroes->print();
 
         int choose_move;
         for (int i = 0; i < 3; ++i) {
@@ -155,7 +158,7 @@ void Block::battle()
             monsters[i]->regenerate();
         }//DISPLAY STATS()
         if (turn%2==1) {
-            cout << "Heroe's turn...\n\n";
+            cout << "\n HEROES TURN!...\n\n";
             //choose
             for (int i = 0; i < 3; ++i){
 

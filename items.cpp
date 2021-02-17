@@ -32,7 +32,6 @@ int Item::get_min_lvl() {return min_level;}
 Weapon::Weapon(std::string w_name, int w_price, int w_min_level, int w_damage, int  w_hands):Item(w_name, w_price, w_min_level),
 two_hands_needed(w_hands),damage_per_attack(w_damage)
 {
-    cout << "two hands needed " << two_hands_needed <<"\n";
    // damage_per_attack=w_damage;
     //two_hands_needed=w_hands;//error
 }
