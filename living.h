@@ -40,11 +40,10 @@ class Monster; //Class Forwarding,it helps so attack() function takes Monster po
 //class Spell;
 class Hero: public Living{
 
-private:
+protected:
     int magicPower;
     int current_magic_power;
     int money;
-protected:
     int strength;
     double dexterity;
     int exp;
@@ -68,7 +67,6 @@ public:
     void display_inventory();
     Item* remove_from_Inv(int n);
     void display_stats();
-    //bool IsAlive();
     void attack(Monster*);
     void equip();
     void wear(Item* ptr);

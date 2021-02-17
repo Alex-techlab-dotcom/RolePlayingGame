@@ -128,6 +128,7 @@ void Block::display_monsters(){
 void Block::battle()
 {
     cout << "A BATTLE IS ABOUT TO BEGIN!\n\n";
+    string answer;
     int turn=1,selected_monster=1,number_of_monsters=monsters.size();
     while (!monsters.empty() and UserHeroes->alive() )
     {
@@ -148,7 +149,7 @@ void Block::battle()
             if (UserHeroes->get_Hero(i) != nullptr){
                 if (UserHeroes->get_Hero(i)->IsAlive()){
                  UserHeroes->get_Hero(i)->regenerate();
-                 UserHeroes->get_Hero(i)->display_stats();
+                // UserHeroes->get_Hero(i)->display_stats();
                  cout << "\n";
                 }
             }
@@ -156,6 +157,25 @@ void Block::battle()
         for (int i = 0; i < monsters.size(); ++i){
             monsters[i]->regenerate();
         }//DISPLAY STATS()
+
+        cout<<"Check stats for monsters  and heroes (YES/NO)\n";
+        cin>>answer;
+        if (answer=="YES"){
+            for (int i = 0; i < 3; ++i) {
+                if (UserHeroes->get_Hero(i) != nullptr){
+                    if (UserHeroes->get_Hero(i)->IsAlive()){
+                        UserHeroes->get_Hero(i)->display_stats();
+                        cout << "\n";
+                    }
+                }
+            }
+            for (int i = 0; i <monsters.size() ; ++i) {
+                cout<<i+1<<") ";
+                monsters[i]->display_stats();
+                cout<<"\n";
+            }
+
+        }
         if (turn%2==1) {
             cout << "\n HEROES TURN!...\n\n";
             //choose
@@ -324,28 +344,28 @@ void Grid::place_to_map(CompanyOfHeroes* c){
     Map[0][0]->UserHeroes=c;
 }
 
-
-void Grid::move_right(CompanyOfHeroes* c) {
+void Grid::move_down(CompanyOfHeroes* c){
+//void Grid::move_right(CompanyOfHeroes* c) {
     Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x() + 1][c->get_y()]->UserHeroes = c;
     c->change_pos(c->get_x() + 1, c->get_y());
 
 }
-
-void Grid::move_up(CompanyOfHeroes* c){
+void Grid::move_right(CompanyOfHeroes* c) {
+//void Grid::move_up(CompanyOfHeroes* c){
     Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x()][c->get_y()+1]->UserHeroes=c;
     c->change_pos(c->get_x(),c->get_y()+1);
 }
 
-
-void Grid::move_down(CompanyOfHeroes* c){
+void Grid::move_left(CompanyOfHeroes* c) {
+//void Grid::move_down(CompanyOfHeroes* c){
     Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x()][c->get_y()-1]->UserHeroes=c;
     c->change_pos(c->get_x(),c->get_y()-1);
 }
-
-void Grid::move_left(CompanyOfHeroes* c) {
+void Grid::move_up(CompanyOfHeroes *c) {
+//void Grid::move_left(CompanyOfHeroes* c) {
     Map[c->get_x() ][c->get_y()]->UserHeroes = nullptr;
     Map[c->get_x() - 1][c->get_y()]->UserHeroes = c;
     c->change_pos(c->get_x() - 1, c->get_y());
@@ -427,11 +447,13 @@ void Grid::populate_grid(int level){
                     switch (monster_type) {
                         case 0:
                             Map[i][j]->add_monster(Dragon::Construct_Dragon(name, level));
+                            break;
                         case 1:
                             Map[i][j]->add_monster(Exoskeleton::Construct_Exoskeleton(name, level));
+                            break;
                         case 2:
                             Map[i][j]->add_monster(Spirit::Construct_Spirit(name, level));
-
+                            break;
                     }
                 }
             }
@@ -444,26 +466,34 @@ vector<char> Grid::option(int x, int y){
     vector<char>options;
     if(y-1>=0){
         if(!Map[x][y-1]->is_non_accessible()){
-            cout<<"Press D for going Down!\n";
-            options.push_back('D');
+            cout<<"Press L for going Left!\n";
+            options.push_back('L');
+            // cout<<"Press D for going Down!\n";
+            //options.push_back('D');
         }
     }
     if(y+1<10){
         if (!Map[x][y+1]->is_non_accessible()){
-            cout<<"Press U for going Up!\n";
-            options.push_back('U');
+            cout<<"Press R for going Right!\n";
+            options.push_back('R');
+            //cout<<"Press U for going Up!\n";
+            //options.push_back('U');
         }
     }
     if (x-1>=0){
         if (!Map[x-1][y]->is_non_accessible()){
-            cout<<"Press L for going Left!\n";
-            options.push_back('L');
+            cout<<"Press U for going Up!\n";
+            options.push_back('U');
+           // cout<<"Press L for going Left!\n";
+            //options.push_back('L');
         }
     }
     if (x+1<10){
         if (!Map[x+1][y]->is_non_accessible()){
-            cout<<"Press R for going Right!\n";
-            options.push_back('R');
+            cout<<"Press D for going Down!\n";
+            options.push_back('D');
+            //cout<<"Press R for going Right!\n";
+            //options.push_back('R');
         }
     }
     if(Map[x][y]->is_market()){
@@ -482,6 +512,9 @@ vector<char> Grid::option(int x, int y){
 
     cout<<"Press E to Equip items!\n";
     options.push_back('E');
+
+    cout<<"Press P to use potions!\n";
+    options.push_back('P');
 
     return options;
 

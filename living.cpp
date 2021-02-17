@@ -30,6 +30,29 @@ void Warrior::level_up()
     strength+=40;
     agility+=0.07;
     dexterity+=0.04;
+    switch (level) {
+        case 2:
+            max_healthPower=300;
+            current_hp=max_healthPower;
+            magicPower=150;
+            current_magic_power=magicPower;
+            break;
+        case 3:
+            max_healthPower=350;
+            current_hp=max_healthPower;
+            magicPower=180;
+            current_magic_power=magicPower;
+            break;
+        case 4:
+            max_healthPower=400;
+            current_hp=max_healthPower;
+            magicPower=200;
+            current_magic_power=magicPower;
+            break;
+        case 5:
+            max_healthPower=500;
+            current_hp=max_healthPower;
+    }
 }
 
 //PALADIN
@@ -46,6 +69,30 @@ void Paladin::level_up()
     strength+=40;
     agility+=0.04;
     dexterity+=0.07;
+    switch (level) {
+        case 2:
+            max_healthPower=300;
+            current_hp=max_healthPower;
+            magicPower=150;
+            current_magic_power=magicPower;
+            break;
+        case 3:
+            max_healthPower=350;
+            current_hp=max_healthPower;
+            magicPower=180;
+            current_magic_power=magicPower;
+            break;
+        case 4:
+            max_healthPower=400;
+            current_hp=max_healthPower;
+            magicPower=200;
+            current_magic_power=magicPower;
+            break;
+        case 5:
+            max_healthPower=450;
+            current_hp=max_healthPower;
+    }
+
 }
 
 //SORCERER
@@ -61,6 +108,29 @@ void Sorcerer::level_up()
     strength+=30;
     agility+=0.07;
     dexterity+=0.07;
+    switch (level) {
+        case 2:
+            max_healthPower=250;
+            current_hp=max_healthPower;
+            magicPower=150;
+            current_magic_power=magicPower;
+            break;
+        case 3:
+            max_healthPower=300;
+            current_hp=max_healthPower;
+            magicPower=200;
+            current_magic_power=magicPower;
+            break;
+        case 4:
+            max_healthPower=350;
+            current_hp=max_healthPower;
+            magicPower=250;
+            current_magic_power=magicPower;
+            break;
+        case 5:
+            max_healthPower=400;
+            current_hp=max_healthPower;
+    }
 }
 
 //HERO
@@ -70,7 +140,7 @@ Hero::Hero(const string& h_name, double hp, double agil, int str, double dext):L
     exp=0;
     current_magic_power=100;
     magicPower=100;
-    money=1200;
+    money=2000;
     for(int i=0; i<4; i++)
         Abilities[i]=nullptr;
 }
@@ -95,7 +165,7 @@ void Hero::lose_money()
 void Hero::regenerate()
 {
     current_hp+= max_healthPower*0.2;
-    current_magic_power+=(int )(current_magic_power*0.2);
+    current_magic_power+=(int )(magicPower*0.2);
     //we dont want to regenerate more hp than the hero initially has!
     if (current_hp>max_healthPower)current_hp=max_healthPower;
     if (current_magic_power>magicPower)current_magic_power=magicPower;
@@ -162,7 +232,7 @@ Item* Hero::remove_from_Inv(int n)
 
 void Hero::display_stats(){
     cout << name << endl;
-    cout << level << endl;
+    cout << "Level: "<< level << endl;
     switch (level) {
         case 1:{
             cout << "XP: " << exp << "/"<< LEVEL_TWO<<endl;
@@ -216,7 +286,7 @@ void Hero::wear(Item* ptr1)
                         place_to_bag(B.left_hand);//put the old weapon to bug
                         B.right_hand= nullptr;// the other hand is now free
                         B.left_hand=(Weapon*)ptr1;
-                        //dynamic_cast<Weapon*>(ptr);
+
                     }else{
 
                         if (B.right_hand== nullptr)B.right_hand=dynamic_cast<Weapon*>(ptr1);
@@ -247,7 +317,6 @@ void Hero::wear(Item* ptr1)
                     }
                 }else {
                     B.left_hand = dynamic_cast<Weapon *>(ptr1);
-                    cout << "top\n";
                 }
 
             }
@@ -269,6 +338,7 @@ void Hero::equip()
      display_inventory();
      Item *ptr;
      int item_num;
+     string answer;
 
      cout << "Choose one item to equip...\n";
      cout <<"Press 0 to exit\n";
@@ -276,8 +346,19 @@ void Hero::equip()
      while (item_num)
      {
          ptr=remove_from_Inv(item_num);
-         cout<<"two hands "<<dynamic_cast<Weapon*>(ptr)->two_hands()<<"\n";
          wear(ptr);
+         cout << "Check Build? (yes/no)\n";
+         cin>>answer;
+         if (answer=="yes"){
+             if (B.chest!= nullptr)B.chest->print_Item();
+             if (B.left_hand==B.right_hand){
+                 if (B.right_hand!= nullptr)B.right_hand->print_Item();//The hero has a two handed weapon!
+             }else{
+                 if (B.right_hand!= nullptr)B.right_hand->print_Item();
+                 if (B.left_hand!= nullptr)B.left_hand->print_Item();
+             }
+             if (B.left_hand==B.right_hand and B.chest== nullptr and B.left_hand== nullptr)cout << "You haven't equip any items yet!\n\n";
+         }
          if (Inventory_size()){
              display_inventory();
              cout << "Choose one item to equip...\n";
@@ -526,7 +607,7 @@ void Monster::setDefence(int defence) {
     Monster::defence = defence;
 }
 void Monster::regenerate() {
-    current_hp+= max_healthPower*0.35;
+    current_hp+= max_healthPower*0.15;
        //we dont want to regenerate more hp than the hero initially has!
     if (current_hp>max_healthPower)current_hp=max_healthPower;
 }
@@ -545,7 +626,7 @@ Dragon * Dragon::Construct_Dragon(string name, int lvl) {
         case 2:
              return  new Dragon(name, 2, 450, 0.1, 100, 140, 50);
         default:
-             return new Dragon(name, 1, 200, 0, 50, 80, 0);
+             return new Dragon(name, 1, 350, 0, 50, 80, 0);
     }
 }
 
@@ -560,9 +641,9 @@ Exoskeleton * Exoskeleton::Construct_Exoskeleton(string name, int lvl)
     case 3:
         return new Exoskeleton(name, 3, 1000, 0.2, 135, 180, 180);
     case 2:
-        return new Exoskeleton(name, 2, 450, 0.1, 60, 110, 100);
+        return new Exoskeleton(name, 2, 500, 0.1, 60, 110, 100);
     default:
-        return new Exoskeleton(name, 1, 200, 0, 30, 50, 60);
+        return new Exoskeleton(name, 1, 350, 0, 30, 50, 60);
     }
 }
 
@@ -577,8 +658,8 @@ Spirit * Spirit::Construct_Spirit(string name, int lvl)
     case 3:
         return new Spirit(name, 3, 1000, 0.5, 135, 180, 150);
     case 2:
-        return new Spirit(name, 2, 450, 0.3, 60, 110, 50);
+        return new Spirit(name, 2, 500, 0.3, 60, 110, 50);
     default:
-        return new Spirit(name, 1, 200, 0.2, 30, 50, 0);
+        return new Spirit(name, 1, 350, 0.2, 30, 50, 0);
     }
 }

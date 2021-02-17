@@ -55,11 +55,15 @@ int main() {
     cout<<"Hero creation is complete, the game will begin soon!"<<endl;
 
     Grid map;
-    map.display_map();
+
+
 
     CompanyOfHeroes c(characters[0],characters[1], characters[2]);
     Shop S("weapon.txt","Armor.txt","Potions.txt","Spells.txt");
-   map.place_to_map(&c);
+
+    map.place_to_map(&c);
+    map.display_map();
+
     char input;
             while(input!='Q'){
                 vector<char>moves=map.option(c.get_x(),c.get_y());
@@ -107,10 +111,42 @@ int main() {
                                 c.get_Hero(i)->equip();
                             }
                         }
+                        break;
+                    case 'P':{
+
+                    }
+                        cout << "Choose hero to use potion!\n";
+                        int sh=1;
+                        while (sh){
+                            cout<<"0) exit...\n";
+                            for (int i = 0; i <c.number_of_heroes() ; ++i) {
+                                if (c.get_Hero(i)!= nullptr){
+                                    cout<< i+1<<") " <<c.get_Hero(i)->get_name()<<"\n";
+                                }
+                            }
+                            cin>>sh;
+                            if (sh==0)break;
+                            while (sh>c.number_of_heroes())cin>>sh;
+
+                            cout << "Choose potion...\n\n";
+                            vector<Potion *> hero_pots = c.get_Hero(sh-1)->display_pots();
+                            if (hero_pots.size()!=0){
+                                int chosen_pot;
+                                cin >> chosen_pot;
+                                while (chosen_pot < 1 or chosen_pot > hero_pots.size()) {
+                                    cout << "Please, choose again more carefully...\n\n";
+                                    cin >> chosen_pot;
+                                }
+
+                                c.get_Hero(sh)->use_pot(hero_pots[chosen_pot - 1]);
+                            }else cout << "You havent any pots!\n\n";
+
+                        }
+                        break;
                 }
 
-                cout<<"x: " << c.get_x() << "\n";
-                cout << "y: " << c.get_y() << "\n";
+               // cout<<"x: " << c.get_x() << "\n";
+               // cout << "y: " << c.get_y() << "\n";
                 map.check_battle(c.get_x(),c.get_y());
                 for (int i = 0; i < 3; ++i) {
                     if (c.get_Hero(i)!= nullptr){

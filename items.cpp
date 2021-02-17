@@ -75,6 +75,7 @@ void Armor::print_Item()
     cout << "Minimum level :" << min_level <<"\n";
     cout << "Price :" << price << "gold coins \n";
     cout << "Damage reduction :" << damage_reduction*10 <<"%";
+    cout <<"\n";
 }
 
 double Armor::get_damage_reduction()
