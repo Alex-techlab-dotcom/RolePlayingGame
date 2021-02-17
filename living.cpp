@@ -369,6 +369,13 @@ int Hero::display_spells() {
 }
 
 Debuff* Hero::use_spell(int spell, Monster* target, int turn){
+    if(current_magic_power-Abilities[spell]->getManaCost()>=0)
+        lose_mana(Abilities[spell]->getManaCost());
+    else{
+        cout<<"Not enough mana to cast this spell."<< endl;
+        return nullptr;
+    }
+
     int random=rand()%100+1;
     double d=target->get_agility()*100;
     if((double)random>d){
@@ -463,6 +470,10 @@ void Hero::gain_exp(int experience) {
     }
 
 
+}
+
+void Hero::lose_mana(int mana_amount) {
+    current_magic_power-=mana_amount;
 }
 
 //MONSTER

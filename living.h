@@ -80,6 +80,7 @@ public:
     bool has_any_spells();
     Spell* remove_spell(int );
     void gain_exp(int );
+    void lose_mana(int);
 };
 
 

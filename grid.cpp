@@ -10,7 +10,6 @@ CompanyOfHeroes::CompanyOfHeroes(Hero* h1 ,Hero* h2 , Hero* h3)
     MyHeroes[0]=h1;
     MyHeroes[1]=h2;
     MyHeroes[2]=h3;
-    if(MyHeroes[2]== nullptr)cout << "HI\n";
     x=0;
     y=0;
 }
@@ -315,7 +314,7 @@ Grid::Grid(){
 
 
             else if( (i==0 and j==0) or (i==9 and j==9) or (i==6 and j==5))Map[i][j]=new Block("Market");
-            else Map[i][j]=new Block("common");
+            else Map[i][j]=new Block("Common");
         }
     }
     populate_grid(1);
@@ -411,7 +410,7 @@ void Grid::populate_grid(int level){
 
     for(int i=0; i<10; i++) {
         for (int j = 0; j < 10; j++) {
-            if (Map[i][j]->TypeOfBlock != "Non_accessible") {
+            if (Map[i][j]->TypeOfBlock == "Common") {
                 int monster_count = rand() % 4;
                 for (int k = monster_count; k > 0; k--) {
                     int monster_type = rand() % 3;
@@ -438,4 +437,56 @@ void Grid::populate_grid(int level){
             }
         }
     }
+}
+
+vector<char> Grid::option(int x, int y){
+    //Players movement options
+    vector<char>options;
+    if(y-1>=0){
+        if(!Map[x][y-1]->is_non_accessible()){
+            cout<<"Press D for going Down!\n";
+            options.push_back('D');
+        }
+    }
+    if(y+1<10){
+        if (!Map[x][y+1]->is_non_accessible()){
+            cout<<"Press U for going Up!\n";
+            options.push_back('U');
+        }
+    }
+    if (x-1>=0){
+        if (!Map[x-1][y]->is_non_accessible()){
+            cout<<"Press L for going Left!\n";
+            options.push_back('L');
+        }
+    }
+    if (x+1<10){
+        if (!Map[x+1][y]->is_non_accessible()){
+            cout<<"Press R for going Right!\n";
+            options.push_back('R');
+        }
+    }
+    if(Map[x][y]->is_market()){
+        cout<<"Press M for market!\n";
+        options.push_back('M');
+    }
+
+    cout<<"Press S for Display Stats!\n";
+    options.push_back('S');
+
+    cout<<"Press T for Display Map!\n";
+    options.push_back('T');
+
+    cout<<"Press Q to Quit the game!\n";
+    options.push_back('Q');
+
+    cout<<"Press E to Equip items!\n";
+    options.push_back('E');
+
+    return options;
+
+}
+
+void Grid::check_battle(int x, int y){
+    Map[x][y]->check_for_battle();
 }

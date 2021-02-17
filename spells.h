@@ -26,6 +26,8 @@ public:
     int getMaxDamage() const;
     virtual int getRounds() const=0;
     virtual double getDebuff()const=0;
+
+    int getManaCost() const;
 };
 
 //debuffs are given as positive real numbers from 0 to 1 that translate to percentages (ex armor_debuff=0.1 -10% effect)
