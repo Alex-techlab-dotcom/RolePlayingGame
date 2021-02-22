@@ -12,6 +12,7 @@ private:
       int min_level;
 public:
     Item(std::string, int, int);
+    virtual ~Item()=0;
     virtual void print_Item()=0;
     void get( std::string& lname,int& lprice,  int& lmin_level,int& sell_price2);
     int  get_price();

@@ -25,6 +25,7 @@ protected:
     double agility;
 public:
     Living(string, int ,double, double);
+    virtual ~Living()=0;
     string get_name();
     virtual void lose_life(int damage)=0;
     double get_agility(){
@@ -53,6 +54,14 @@ protected:
 
 public:
     Hero(const string&, double, double,int, double);
+    virtual ~Hero(){
+        for (int i = 0; i <Inventory_size() ; ++i) {
+            delete Inventory[i];
+        }
+        for (int i = 0; i <4 ; ++i) {
+            Abilities[i]= nullptr;
+        }
+    }
     virtual void level_up()=0;
     void lose_money();
     void revive();

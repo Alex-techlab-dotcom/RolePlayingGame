@@ -12,14 +12,19 @@ using namespace std;
 
 class Shop{
 private:
-    vector <Weapon*> Weapons;
+    vector <Weapon> Weapons;
     vector <Spell*>  Spells;
     vector <Armor> Armors;
     vector <Potion> Potions;
 
 public:
-    Shop(const string& W, const string& A,const string& P,const string& S);
+    Shop();
     void enter_shop(CompanyOfHeroes* c);
+    void delete_shop(){
+        for (int i = 0; i <Spells.size() ; ++i) {
+            delete Spells[i];
+        }
+    }
 };
 
 #endif

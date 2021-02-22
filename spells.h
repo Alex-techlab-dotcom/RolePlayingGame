@@ -15,6 +15,7 @@ protected:
     int max_damage;
 public:
     Spell(std::string, int, int, int, int, int);
+    virtual ~Spell()=0;
     std::string get_name();
     int get_price();
     void get(int &m_level,int& mana_c,int& min_dmg,int& max_dmg);

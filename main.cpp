@@ -59,7 +59,7 @@ int main() {
 
 
     CompanyOfHeroes c(characters[0],characters[1], characters[2]);
-    Shop S("weapon.txt","Armor.txt","Potions.txt","Spells.txt");
+    Shop S;
 
     map.place_to_map(&c);
     map.display_map();
@@ -158,9 +158,10 @@ int main() {
                     }
                 }
 
-
+                cout << "Quiting game...\n";
 
 
             }
-
+            map.delere_grid();
+            S.delete_shop();
 }

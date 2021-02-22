@@ -11,6 +11,8 @@ Living::Living(string lname,int lvl, double hp, double agil):name(lname)
     agility=agil;
 }
 
+Living::~Living(){}
+
 string Living::get_name(){
     return name;
 }

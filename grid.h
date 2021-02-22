@@ -10,6 +10,11 @@ private:
     int x,y;
 public:
     CompanyOfHeroes(Hero* h1= nullptr ,Hero* h2= nullptr, Hero* h3= nullptr);
+    ~CompanyOfHeroes(){
+        delete MyHeroes[0];
+        delete MyHeroes[1];
+        delete MyHeroes[2];
+    }
     int get_x();
     int get_y();
     void change_pos(int, int);
@@ -56,6 +61,13 @@ public:
     void delete_monsters();
     vector<char> option(int , int );
     void check_battle(int, int );
+    void delere_grid(){
+        for (int i = 0; i <10 ; ++i) {
+            for (int j = 0; j <10 ; ++j) {
+                delete Map[i][j];
+            }
+        }
+    }
 };
 
 #endif

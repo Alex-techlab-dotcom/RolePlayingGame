@@ -8,6 +8,8 @@ Item::Item(std::string i_name, int i_price, int i_min_level){
     sell_price=price/2;
 }
 
+Item::~Item(){}
+
 void Item::get(std::string& lname, int& lprice,  int& lmin_level,int& sell_price2)
 {
     lname=name;

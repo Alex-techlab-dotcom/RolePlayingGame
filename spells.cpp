@@ -10,6 +10,7 @@ Spell::Spell(std::string s_name, int s_price, int s_min_level, int s_mana_cost, 
     min_damage=s_min;
     max_damage=s_max;
 }
+Spell::~Spell(){}
 std::string Spell::get_name()
 {
     return name;

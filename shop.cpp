@@ -1,7 +1,7 @@
 #include "shop.h"
 #include <fstream>
 
-Shop::Shop(const string& W, const string& A,const string& P,const string& S){
+Shop::Shop(){
 
     string name,num_of_hands;
     int price,dmg,lvl;
@@ -12,10 +12,10 @@ Shop::Shop(const string& W, const string& A,const string& P,const string& S){
 
         if (num_of_hands=="OneHand")
         {
-            Weapon* w=new Weapon(name,price,lvl,dmg, 0);
+            Weapon w(name,price,lvl,dmg, 0);
             Weapons.push_back(w);
         }else {
-            Weapon* w1=new Weapon(name,price,lvl,dmg, 1);
+            Weapon w1(name,price,lvl,dmg, 1);
             Weapons.push_back(w1);
         }
 
@@ -123,7 +123,7 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                         for (int i = 0; i < Weapons.size(); ++i)
                         {
                             cout << i+1 <<")";
-                            Weapons[i]->print_Item();
+                            Weapons[i].print_Item();
                             cout << "\n";
                         }
                         cout<< "Your money: " << buyers[selected_hero-1]->get_money() << "\n\n";
@@ -133,19 +133,19 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                         cin >> Item_num;
                         while (Item_num)
                         {
-                            if (buyers[selected_hero-1]->get_lvl()>=Weapons[Item_num-1]->get_min_lvl()){
-                                if (buyers[selected_hero-1]->get_money()>=Weapons[Item_num-1]->get_price())//if u can afford the item
+                            if (buyers[selected_hero-1]->get_lvl()>=Weapons[Item_num-1].get_min_lvl()){
+                                if (buyers[selected_hero-1]->get_money()>=Weapons[Item_num-1].get_price())//if u can afford the item
                                 {
-                                    buyers[selected_hero-1]->reduce_money(Weapons[Item_num-1]->get_price());
-                                    cout<<"Nice,you just bought " << Weapons[Item_num-1]->get_name();
+                                    buyers[selected_hero-1]->reduce_money(Weapons[Item_num-1].get_price());
+                                    cout<<"Nice,you just bought " << Weapons[Item_num-1].get_name();
                                     cout <<"You have " <<buyers[selected_hero-1]->get_money() <<" gold coins left!\n\n";
                                   //  Weapon w1=Weapons[Item_num-1];
-                                    buyers[selected_hero-1]->place_to_bag(Weapons[Item_num-1]);
+                                    buyers[selected_hero-1]->place_to_bag(&Weapons[Item_num-1]);
                                     cout << "num :" << buyers[selected_hero-1]->Inventory_size() << "\n\n";
                                 }else
                                 {
                                     cout << "I am sorry you do not have enough gold coins\n";
-                                    cout << Weapons[Item_num-1]->get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
+                                    cout << Weapons[Item_num-1].get_price()-buyers[selected_hero-1]->get_money() << " gold coins missing\n\n";
                                 }
                             }else cout << "You are not the apropriate level\n\n";
 
