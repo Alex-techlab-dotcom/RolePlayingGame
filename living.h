@@ -9,10 +9,10 @@
 using namespace std;
 class Debuff;
 
-#define LEVEL_TWO 1000
-#define LEVEL_THREE 2000
-#define LEVEL_FOUR 3000
-#define LEVEL_FIVE 4000
+#define LEVEL_TWO 500
+#define LEVEL_THREE 1000
+#define LEVEL_FOUR 1500
+#define LEVEL_FIVE 2000
 #define BASIC_EXP 100
 #define STANDARD_GOLD 100
 

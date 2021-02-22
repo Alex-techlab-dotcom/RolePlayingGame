@@ -520,32 +520,32 @@ void Hero::gain_exp(int experience) {
         case 1:{
             if(exp+experience>=LEVEL_TWO){
                 level_up();//Becomes level 2!
-                exp=exp+experience-1000;
+                exp=exp+experience-LEVEL_TWO;
             }else exp+=experience;
             break;
         }
         case 2:{
             if (exp + experience>=LEVEL_THREE){
                 level_up();//Becomes level 3!
-                exp=exp+experience-2000;
+                exp=exp+experience-LEVEL_THREE;
             }else exp+=experience;
             break;
         }
         case 3:{
             if (exp+experience>=LEVEL_FOUR){
                 level_up();//Becomes level 4!
-                exp=exp+experience-3000;
+                exp=exp+experience-LEVEL_FOUR;
             } else exp+=experience;
             break;
         }
         case 4:{
             if (exp+experience>=LEVEL_FIVE){
                 level_up();//Becomes level 5!
-                exp=exp+experience-4000;
+                exp=LEVEL_FIVE;
             }else exp+=experience;
             break;
         }case 5:{
-            exp=4000;
+            exp=LEVEL_FIVE;
             break;
         }
     }
