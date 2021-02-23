@@ -42,7 +42,6 @@ public:
     void display_monsters();
     bool is_non_accessible();
     bool is_market();
-    //DisplayStats should be implemented here; (?????)
 };
 
 class Grid{

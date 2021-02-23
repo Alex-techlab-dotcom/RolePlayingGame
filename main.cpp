@@ -144,9 +144,6 @@ int main() {
                         }
                         break;
                 }
-
-               // cout<<"x: " << c.get_x() << "\n";
-               // cout << "y: " << c.get_y() << "\n";
                 map.check_battle(c.get_x(),c.get_y());
                 for (int i = 0; i < 3; ++i) {
                     if (c.get_Hero(i)!= nullptr){

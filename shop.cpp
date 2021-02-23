@@ -346,7 +346,6 @@ void Shop::enter_shop(CompanyOfHeroes *c)
                 cout << "Type 'no' to stop...\n";
                 cin >>KeepBuying;
             }
-           // cout << "\033[2J\033[1;1H";
 
 
             cout << "If you want to choose an other hero to buy items ,pres yes...\n";

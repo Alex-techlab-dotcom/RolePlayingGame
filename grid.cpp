@@ -137,13 +137,6 @@ void Block::battle()
         vector<Debuff*> debuffs;
         Debuff * spell_db;
         cout<<"\n\n";
-       /* for (int i = 0; i <monsters.size() ; ++i) {
-            cout<<i+1<<") ";
-           monsters[i]->display_stats();
-           cout<<"\n";
-        }*/
-       // UserHeroes->print();
-
         int choose_move;
         for (int i = 0; i < 3; ++i) {
             if (UserHeroes->get_Hero(i) != nullptr){
@@ -468,32 +461,24 @@ vector<char> Grid::option(int x, int y){
         if(!Map[x][y-1]->is_non_accessible()){
             cout<<"Press L for going Left!\n";
             options.push_back('L');
-            // cout<<"Press D for going Down!\n";
-            //options.push_back('D');
         }
     }
     if(y+1<10){
         if (!Map[x][y+1]->is_non_accessible()){
             cout<<"Press R for going Right!\n";
             options.push_back('R');
-            //cout<<"Press U for going Up!\n";
-            //options.push_back('U');
         }
     }
     if (x-1>=0){
         if (!Map[x-1][y]->is_non_accessible()){
             cout<<"Press U for going Up!\n";
             options.push_back('U');
-           // cout<<"Press L for going Left!\n";
-            //options.push_back('L');
         }
     }
     if (x+1<10){
         if (!Map[x+1][y]->is_non_accessible()){
             cout<<"Press D for going Down!\n";
             options.push_back('D');
-            //cout<<"Press R for going Right!\n";
-            //options.push_back('R');
         }
     }
     if(Map[x][y]->is_market()){

@@ -33,10 +33,7 @@ int Item::get_min_lvl() {return min_level;}
 //WEAPON
 Weapon::Weapon(std::string w_name, int w_price, int w_min_level, int w_damage, int  w_hands):Item(w_name, w_price, w_min_level),
 two_hands_needed(w_hands),damage_per_attack(w_damage)
-{
-   // damage_per_attack=w_damage;
-    //two_hands_needed=w_hands;//error
-}
+{}
 
 void Weapon::print_Item()
 {
@@ -130,5 +127,4 @@ void Potion::buff_stats(double & hp, int & mana, double & agility, int & strengt
 
  Build::Build(Weapon* l,Weapon* r,Armor* a):left_hand(l),right_hand(r),chest(a)
 {
-    //Build constructor
 }
